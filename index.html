@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>M.A.T.H. | Rail-Drawer Hub - Fluidos & Integridade</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -12,7 +12,7 @@
 
     <style>
         :root {
-            --bg: #07090e; 
+            --bg: #07090e;
             --card-bg: #0d111a;
             --card-gradient: linear-gradient(145deg, #111726 0%, #0a0e17 100%);
             --card-border: #1e293b;
@@ -55,31 +55,136 @@
             --drawer-bg: #ffffff;
         }
 
-        * { box-sizing: border-box; }
-        body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); padding-bottom: 40px; -webkit-tap-highlight-color: transparent; transition: background 0.25s, color 0.25s; overflow-x: hidden; }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            padding-bottom: 48px;
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.25s, color 0.25s;
+            overflow-x: hidden;
+        }
 
         /* TELA DE LOGIN */
-        .login-screen { display: flex; min-height: 100vh; align-items: center; justify-content: center; background: radial-gradient(circle at center, #111726 0%, #000000 100%); padding: 20px; position: fixed; inset: 0; z-index: 9999; }
-        .login-card { background: var(--card-gradient); border: 1px solid var(--card-border); border-radius: 14px; max-width: 420px; width: 100%; padding: 45px 35px; text-align: center; box-shadow: var(--shadow-card); }
-        .login-card h2 { font-family: 'JetBrains Mono'; font-size: 26px; font-weight: 800; letter-spacing: 4px; margin: 0 0 4px 0; color: var(--text-main); }
-        .login-card p { font-size: 11px; color: var(--text-muted); margin: 0 0 30px 0; text-transform: uppercase; letter-spacing: 1px; }
+        .login-screen {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111726 0%, #000000 100%);
+            padding: 20px;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+        }
+        .login-card {
+            background: var(--card-gradient);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            max-width: 420px;
+            width: 100%;
+            padding: 45px 35px;
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        .login-card h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin: 0 0 4px 0;
+            color: var(--text-main);
+        }
+        .login-card p {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin: 0 0 28px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
         /* HEADER */
-        .top-header { background: var(--card-gradient); border-bottom: 1px solid var(--card-border); padding: 14px 24px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.25); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); }
-        .header-left { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-muted); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
-        
-        .header-center { text-align: center; height: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .fade-text { transition: opacity 0.5s ease-in-out; opacity: 1; }
+        .top-header {
+            background: var(--card-gradient);
+            border-bottom: 1px solid var(--card-border);
+            padding: 14px 24px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+        .header-left {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .header-center {
+            text-align: center;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .fade-text { transition: opacity 0.45s ease-in-out; opacity: 1; }
         .fade-out { opacity: 0; }
-        .header-center h1 { margin: 0; font-size: clamp(17px, 2.5vw, 21px); font-weight: 800; font-family: 'JetBrains Mono'; letter-spacing: 3px; color: var(--accent-gold); }
-        .header-center p { margin: 2px 0 0 0; font-size: clamp(9px, 1.5vw, 10px); color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
-        
-        .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .btn-nav { background: var(--iron); color: var(--text-main); border: 1px solid var(--card-border); padding: 8px 14px; border-radius: 6px; font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+        .header-center h1 {
+            margin: 0;
+            font-size: clamp(17px, 2.5vw, 21px);
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+        }
+        .header-center p {
+            margin: 2px 0 0 0;
+            font-size: clamp(9px, 1.5vw, 10px);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+        .header-right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .btn-nav {
+            background: var(--iron);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
         .btn-nav:hover { border-color: var(--card-border-hover); transform: translateY(-1px); }
-        .btn-nav.share { background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%); border-color: var(--accent-gold); color: var(--accent-gold); }
+        .btn-nav.share {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
 
-        .container { max-width: 1600px; margin: 20px auto; padding: 0 24px; width: 100%; box-sizing: border-box; }
+        .container { max-width: 1600px; margin: 20px auto; padding: 0 24px; width: 100%; }
 
         /* PAINEL TOPO */
         .top-status-grid {
@@ -102,15 +207,14 @@
             justify-content: space-between;
             transition: all 0.25s;
             min-height: 200px;
-            box-sizing: border-box;
         }
         .kpi-square-box:hover { box-shadow: var(--shadow-hover); border-color: var(--card-border-hover); }
-        
+
         .kpi-square-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
@@ -129,18 +233,18 @@
             border: 1px solid var(--card-border);
             border-radius: 6px;
             padding: 8px 12px;
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             transition: border-color 0.2s;
         }
         .kpi-metric-row:hover { border-color: var(--card-border-hover); }
         .metric-title { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; color: var(--text-main); }
         .metric-dot { width: 8px; height: 8px; border-radius: 50%; }
         .metric-val { font-size: 15px; font-weight: 800; }
-        
+
         .dot-crit { background: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
         .dot-warn { background: var(--accent-gold); box-shadow: 0 0 8px var(--accent-gold); }
         .dot-ok { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
-        
+
         .val-crit { color: var(--accent-red); }
         .val-warn { color: var(--accent-gold); }
         .val-ok { color: var(--accent-green); }
@@ -149,7 +253,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
             color: var(--text-muted);
             border-top: 1px solid var(--card-border);
@@ -166,7 +270,6 @@
             flex-direction: column;
             justify-content: space-between;
             transition: all 0.25s;
-            box-sizing: border-box;
             min-height: 200px;
         }
         .active-asset-banner:hover { border-color: var(--card-border-hover); box-shadow: var(--shadow-hover); }
@@ -177,9 +280,9 @@
             flex-wrap: wrap;
             gap: 14px;
         }
-        .banner-title { font-family: 'JetBrains Mono'; font-size: 22px; font-weight: 800; color: var(--text-main); letter-spacing: 1px; }
-        .banner-sub { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono'; margin-top: 4px; }
-        
+        .banner-title { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 800; color: var(--text-main); letter-spacing: 1px; }
+        .banner-sub { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 4px; }
+
         .lead-time-boxes {
             display: flex;
             gap: 12px;
@@ -191,7 +294,7 @@
             border: 1px solid var(--card-border);
             border-radius: 8px;
             padding: 8px 14px;
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             display: inline-flex;
             align-items: center;
@@ -199,15 +302,13 @@
             color: var(--text-main);
             transition: border-color 0.2s, background 0.2s;
         }
-        .lead-time-pill span { color: var(--text-main); font-weight: 600; }
-        .lead-time-pill b { color: var(--text-main); font-weight: 700; }
         .lead-time-pill:hover { border-color: var(--card-border-hover); }
 
         .btn-open-drawer {
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: #000;
             border: none;
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 800;
             padding: 12px 22px;
             border-radius: 8px;
@@ -233,7 +334,7 @@
             padding: 14px 18px;
             border-radius: 10px;
             cursor: pointer;
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 800;
             font-size: 12px;
             letter-spacing: 1px;
@@ -254,30 +355,33 @@
             box-shadow: 0 0 25px rgba(245, 158, 11, 0.2), var(--shadow-card);
         }
 
-        /* GRID PRINCIPAL ESTÁVEL */
-        .detail-split-grid { 
-            display: grid; 
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); 
-            gap: 20px; 
+        /* GRID PRINCIPAL */
+        .detail-split-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 20px;
             align-items: stretch;
-            transition: none;
             width: 100%;
             min-height: 640px;
         }
-
         .detail-split-grid.foco-laudos { grid-template-columns: 1fr; }
         .detail-split-grid.foco-laudos .right-chart-panel { display: none !important; }
-
         .detail-split-grid.foco-graficos { grid-template-columns: 1fr; }
         .detail-split-grid.foco-graficos .left-timeline-panel { display: none !important; }
 
-        .left-timeline-panel { min-width: 0; display: flex; flex-direction: column; min-height: 640px; }
-        .right-chart-panel { min-width: 0; display: flex; flex-direction: column; min-height: 640px; }
+        .left-timeline-panel, .right-chart-panel { min-width: 0; display: flex; flex-direction: column; min-height: 640px; }
 
-        .content-box { background: var(--card-gradient); border: 1px solid var(--card-border); border-radius: 12px; padding: 22px; box-shadow: var(--shadow-card); transition: border-color 0.25s; box-sizing: border-box; }
+        .content-box {
+            background: var(--card-gradient);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: var(--shadow-card);
+            transition: border-color 0.25s;
+        }
         .content-box:hover { border-color: var(--card-border-hover); }
         .content-box-title {
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             font-weight: 800;
             text-transform: uppercase;
@@ -306,7 +410,6 @@
             width: 100%;
             height: 100%;
             min-height: 640px;
-            box-sizing: border-box;
             transition: border-color 0.25s;
         }
         .chart-box-master-fluido:hover { border-color: var(--card-border-hover); }
@@ -323,7 +426,7 @@
             min-height: 38px;
         }
         .chart-master-title {
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11.5px;
             font-weight: 800;
             text-transform: uppercase;
@@ -337,29 +440,20 @@
         }
 
         .chart-nav-controls { display: flex; align-items: center; gap: 8px; }
-        .btn-chart-nav { background: var(--iron); border: 1px solid var(--card-border); color: var(--text-main); padding: 5px 11px; border-radius: 4px; font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.15s; }
-        .btn-chart-nav:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
-        .chart-nav-indicator { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--accent-gold); font-weight: 800; padding: 0 4px; }
-
-        .btn-icon-symbol {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
-            padding: 4px 9px;
+        .btn-chart-nav {
+            background: var(--iron);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 5px 11px;
             border-radius: 4px;
-            font-family: 'JetBrains Mono';
-            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
             font-weight: 800;
             cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 30px;
-            height: 28px;
-            line-height: 1;
+            transition: 0.15s;
         }
-        .btn-icon-symbol:hover { background: var(--accent-gold); color: #000; }
+        .btn-chart-nav:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .chart-nav-indicator { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-gold); font-weight: 800; padding: 0 4px; }
 
         .btn-toggle-symbol {
             background: transparent;
@@ -367,7 +461,7 @@
             color: var(--text-muted);
             border-radius: 4px;
             padding: 4px 8px;
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             font-weight: 800;
             cursor: pointer;
@@ -377,90 +471,84 @@
             justify-content: center;
             min-width: 28px;
             height: 28px;
-            line-height: 1;
         }
         .btn-toggle-symbol:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
 
         .collapsible-body { transition: max-height 0.25s ease, opacity 0.2s ease; max-height: 1400px; opacity: 1; overflow: hidden; }
         .collapsible-body.minimized { max-height: 0 !important; opacity: 0 !important; padding: 0 !important; margin: 0 !important; pointer-events: none; }
 
-        .chart-view-slide { display: none; width: 100%; height: 380px; position: relative; box-sizing: border-box; }
+        .chart-view-slide { display: none; width: 100%; height: 380px; position: relative; }
         .chart-view-slide.active { display: block; }
 
-        .scrollable-feed { max-height: 560px; height: 560px; overflow-y: auto; padding-right: 8px; }
+        .scrollable-feed { max-height: 540px; height: 540px; overflow-y: auto; padding-right: 8px; }
         .scrollable-feed::-webkit-scrollbar { width: 6px; }
         .scrollable-feed::-webkit-scrollbar-track { background: var(--row-bg); border-radius: 4px; }
         .scrollable-feed::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
         .scrollable-feed::-webkit-scrollbar-thumb:hover { background: var(--card-border-hover); }
 
-        .lab-record-card { background: var(--row-gradient); border: 1px solid var(--card-border); border-radius: 8px; padding: 18px; margin-bottom: 14px; position: relative; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: border-color 0.2s; box-sizing: border-box; }
+        .lab-record-card {
+            background: var(--row-gradient);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.2s;
+        }
         .lab-record-card:hover { border-color: var(--card-border-hover); }
-        .lab-record-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-family: 'JetBrains Mono'; }
+        .lab-record-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
         .badge-status { font-size: 9.5px; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .badge-NORMAL { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); }
         .badge-ATENÇÃO { background: rgba(245, 158, 11, 0.2); color: var(--accent-gold); border: 1px solid var(--accent-gold); }
         .badge-CRÍTICA { background: rgba(244, 63, 94, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); }
 
         .lab-text-body { font-size: 13px; line-height: 1.5; color: var(--text-main); margin-bottom: 8px; }
-        .lab-action-text { font-size: 12px; color: var(--accent-gold); font-family: 'JetBrains Mono'; margin-top: 8px; padding: 6px 10px; background: rgba(245, 158, 11, 0.08); border-radius: 4px; border-left: 2px solid var(--accent-gold); }
-        
-        .box-liberacao-tecnica {
-            background: rgba(21, 149, 112, 0.08);
-            border-left: 3px solid var(--accent-green);
-            border-radius: 0 6px 6px 0;
-            padding: 10px 14px;
-            margin-top: 10px;
+        .lab-action-text {
             font-size: 12px;
-            font-family: 'JetBrains Mono';
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-        .box-liberacao-header {
-            color: var(--accent-green);
-            font-weight: 800;
-            font-size: 11px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .box-liberacao-item {
-            color: var(--text-main);
-            margin: 3px 0;
-            line-height: 1.4;
+            color: var(--accent-gold);
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 8px;
+            padding: 6px 10px;
+            background: rgba(245, 158, 11, 0.08);
+            border-radius: 4px;
+            border-left: 2px solid var(--accent-gold);
         }
 
-        .btn-evidencia-badge {
+        .lab-footer-dates {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--card-border);
+            padding-top: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .btn-acao-inline {
             background: var(--iron);
-            color: var(--accent-gold);
             border: 1px solid var(--card-border);
-            padding: 4px 8px;
+            color: var(--text-main);
             border-radius: 4px;
-            font-family: 'JetBrains Mono';
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
             font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
         }
-        .btn-evidencia-badge:hover {
-            border-color: var(--accent-gold);
-            background: rgba(245, 158, 11, 0.1);
-        }
-
-        .lab-footer-dates { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--card-border); padding-top: 10px; margin-top: 12px; flex-wrap: wrap; gap: 8px; }
-        .datas-duplas-container { display: flex; gap: 16px; align-items: center; }
-
-        .btn-acao-inline { background: var(--iron); border: 1px solid var(--card-border); color: var(--text-main); border-radius: 4px; padding: 5px 10px; cursor: pointer; font-family: 'JetBrains Mono'; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s; }
-        .btn-acao-inline:hover { border-color: var(--card-border-hover); color: var(--text-main); }
+        .btn-acao-inline:hover { border-color: var(--card-border-hover); }
 
         .form-grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .full-width { grid-column: 1 / -1; }
-        
         .field-group { display: flex; flex-direction: column; }
-        .field-group label { font-size: 10px; font-family: 'JetBrains Mono'; color: var(--text-muted); margin-bottom: 4px; font-weight: 700; }
+        .field-group label { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-bottom: 4px; font-weight: 700; }
 
         input, select, textarea {
             background: var(--input-bg);
@@ -472,69 +560,142 @@
             margin-bottom: 10px;
             outline: none;
             color: var(--text-main);
-            font-family: 'JetBrains Mono';
+            font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
             transition: border-color 0.2s;
-            box-sizing: border-box;
         }
         textarea { height: auto !important; }
-        input:focus, select:focus, textarea:focus { border-color: var(--card-border-hover); }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-gold); }
 
-        .btn-action { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #000; border: none; font-family: 'JetBrains Mono'; font-weight: 800; padding: 13px 20px; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; width: 100%; transition: all 0.2s; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); height: 42px; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-action {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #000;
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            padding: 13px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            width: 100%;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
         .btn-action:hover { opacity: 0.95; transform: translateY(-1px); }
         .btn-action.secondary { background: var(--iron); color: var(--text-main); border: 1px solid var(--card-border); box-shadow: none; width: auto; }
 
-        .bottom-action-bar { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 15px 25px; margin-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .bottom-action-bar {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 15px 25px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
 
         /* GAVETA LATERAL */
-        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; display: none; backdrop-filter: blur(4px); }
+        .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; display: none; backdrop-filter: blur(4px); }
         .drawer-overlay.active { display: block; }
-        .drawer-container { position: fixed; top: 0; right: -480px; width: 450px; max-width: 92vw; height: 100%; background: var(--drawer-bg); border-left: 1px solid var(--card-border); z-index: 1001; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; box-shadow: -10px 0 35px rgba(0,0,0,0.5); }
+        .drawer-container {
+            position: fixed;
+            top: 0;
+            right: -480px;
+            width: 450px;
+            max-width: 92vw;
+            height: 100%;
+            background: var(--drawer-bg);
+            border-left: 1px solid var(--card-border);
+            z-index: 1001;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -10px 0 35px rgba(0,0,0,0.5);
+        }
         .drawer-container.active { right: 0; }
         .drawer-header { padding: 18px 22px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
-        .drawer-header h3 { margin: 0; font-family: 'JetBrains Mono'; font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 1.5px; }
+        .drawer-header h3 { margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 1.5px; }
         .btn-close-drawer { background: none; border: none; font-size: 18px; color: var(--text-muted); cursor: pointer; font-weight: 800; }
 
         .drawer-controls { padding: 14px 22px; border-bottom: 1px solid var(--card-border); background: rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 10px; }
         .drawer-search-input { width: 100%; margin-bottom: 0; padding: 9px 12px; font-size: 11px; height: 38px; }
         .drawer-filter-chips { display: flex; gap: 8px; }
-        .drawer-chip-btn { flex: 1; background: var(--row-bg); border: 1px solid var(--card-border); color: var(--text-muted); font-family: 'JetBrains Mono'; font-size: 10.5px; font-weight: 700; padding: 8px 6px; border-radius: 4px; cursor: pointer; text-align: center; transition: 0.15s; }
-        .drawer-chip-btn:hover { border-color: var(--card-border-hover); }
+        .drawer-chip-btn {
+            flex: 1;
+            background: var(--row-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 8px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.15s;
+        }
         .drawer-chip-btn.active { background: rgba(245, 158, 11, 0.18); border-color: var(--accent-gold); color: var(--accent-gold); }
 
         .drawer-body { flex: 1; overflow-y: auto; padding: 15px 22px; }
-        .drawer-item { background: var(--row-gradient); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .drawer-item {
+            background: var(--row-gradient);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
         .drawer-item:hover { border-color: var(--card-border-hover); transform: translateX(-3px); }
         .drawer-item.selected { border: 2px solid var(--accent-gold); background: rgba(245, 158, 11, 0.08); }
-        .btn-del-asset { background: none; border: 1px solid transparent; color: var(--text-muted); border-radius: 4px; padding: 4px 6px; cursor: pointer; font-size: 11px; transition: 0.2s; margin-left: 8px; }
-        .btn-del-asset:hover { color: var(--accent-red); border-color: var(--accent-red); background: rgba(244, 63, 94, 0.1); }
-        
         .drawer-footer { padding: 15px 22px; border-top: 1px solid var(--card-border); }
 
         /* MODAIS */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 2200; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
         .modal-overlay.active { display: flex; }
-        .modal-card-pro { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; max-width: 440px; width: 100%; padding: 26px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative; }
-        .modal-title-pro { font-family: 'JetBrains Mono'; font-size: 15px; font-weight: 800; color: var(--accent-gold); margin-bottom: 4px; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        .modal-card-pro {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            max-width: 440px;
+            width: 100%;
+            padding: 26px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .modal-title-pro { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 800; color: var(--accent-gold); margin-bottom: 6px; letter-spacing: 1px; }
         .modal-desc-pro { font-size: 11px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.4; }
-        .modal-form-group { margin-bottom: 14px; text-align: left; }
-        .modal-form-group label { display: block; font-family: 'JetBrains Mono'; font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
         .modal-btn-row { display: flex; gap: 10px; margin-top: 18px; }
-        .btn-modal-cancel { background: var(--iron); color: var(--text-main); border: 1px solid var(--card-border); padding: 12px; border-radius: 6px; font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 800; cursor: pointer; flex: 1; }
-        .btn-modal-confirm { background: var(--accent-gold); color: #000; border: none; padding: 12px; border-radius: 6px; font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 800; cursor: pointer; flex: 2; transition: 0.2s; }
-        .btn-modal-confirm:hover { opacity: 0.95; transform: translateY(-1px); }
-
-        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .lightbox img { max-width: 90%; max-height: 85%; border: 2px solid var(--card-border-hover); border-radius: 10px; }
+        .btn-modal-cancel { background: var(--iron); color: var(--text-main); border: 1px solid var(--card-border); padding: 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; cursor: pointer; flex: 1; }
+        .btn-modal-confirm { background: var(--accent-gold); color: #000; border: none; padding: 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; cursor: pointer; flex: 2; }
 
         @media (max-width: 1180px) {
             .top-status-grid { grid-template-columns: 1fr; }
             .detail-split-grid { grid-template-columns: 1fr !important; }
             .detail-split-grid.foco-laudos .right-chart-panel,
-            .detail-split-grid.foco-graficos .left-timeline-panel {
-                display: block !important;
-            }
+            .detail-split-grid.foco-graficos .left-timeline-panel { display: block !important; }
         }
         @media (max-width: 768px) {
             .top-header { grid-template-columns: 1fr; text-align: center; padding: 12px 15px; }
@@ -562,26 +723,25 @@
     <div id="painelPrincipal" style="display: none;">
         <header class="top-header">
             <div class="header-left">MATHEUS G COELHO</div>
-            
+
             <div class="header-center">
                 <div id="carouselHeaderContainer" class="fade-text">
                     <h1 id="carouselTitle">M.A.T.H.</h1>
                     <p id="carouselSub">Maintenance Analysis & Tracking Hub</p>
                 </div>
             </div>
-            
+
             <div class="header-right">
-                <button class="btn-nav share" id="btnCompartilhar" onclick="window.abrirModalCompartilhamentoFluido()">COMPARTILHAR</button>
+                <button class="btn-nav share" onclick="window.abrirModalCompartilhamento()">COMPARTILHAR</button>
                 <button class="btn-nav" onclick="window.alternarTema()">TEMA</button>
-                <button id="btnLogout" onclick="window.executarLogout()" style="background: rgba(244,63,94,0.15); color: var(--accent-red); border: 1px solid var(--accent-red); padding: 7px 11px; border-radius: 4px; font-family: 'JetBrains Mono'; font-size: 10px; font-weight: 800; cursor: pointer;">[X] SAIR</button>
+                <button id="btnLogout" onclick="window.executarLogout()" style="background: rgba(244,63,94,0.15); color: var(--accent-red); border: 1px solid var(--accent-red); padding: 7px 11px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 800; cursor: pointer;">[X] SAIR</button>
             </div>
         </header>
 
         <div class="container page-container">
 
-            <!-- 1. FAIXA SUPERIOR: CARD DE PANORAMA + BANNER DO ATIVO ALINHADOS -->
+            <!-- 1. FAIXA SUPERIOR: CARD DE PANORAMA + BANNER DO ATIVO -->
             <div class="top-status-grid">
-                
                 <div class="kpi-square-box">
                     <div class="kpi-square-head">
                         <span>PANORAMA DE LAUDOS</span>
@@ -590,1680 +750,568 @@
 
                     <div class="kpi-metrics-list">
                         <div class="kpi-metric-row">
-                            <span class="metric-title"><span class="metric-dot dot-crit"></span> CRÍTICOS</span>
-                            <span class="metric-val val-crit" id="kpiCountCriticos">0</span>
+                            <span class="metric-title"><span class="metric-dot dot-crit"></span>CRÍTICOS</span>
+                            <span id="kpiCriticos" class="metric-val val-crit">0</span>
                         </div>
                         <div class="kpi-metric-row">
-                            <span class="metric-title"><span class="metric-dot dot-warn"></span> ALERTAS</span>
-                            <span class="metric-val val-warn" id="kpiCountAlertas">0</span>
+                            <span class="metric-title"><span class="metric-dot dot-warn"></span>ATENÇÃO</span>
+                            <span id="kpiAtencao" class="metric-val val-warn">0</span>
                         </div>
                         <div class="kpi-metric-row">
-                            <span class="metric-title"><span class="metric-dot dot-ok"></span> NORMAIS / LIBERADOS</span>
-                            <span class="metric-val val-ok" id="kpiCountNormais">0</span>
+                            <span class="metric-title"><span class="metric-dot dot-ok"></span>NORMAIS</span>
+                            <span id="kpiNormais" class="metric-val val-ok">0</span>
                         </div>
                     </div>
 
                     <div class="kpi-square-footer">
-                        <span>MONITORAMENTO</span>
-                        <span id="kpiFooterTotalAtivos" style="color:var(--text-main); font-weight:700;">0 ATIVOS</span>
+                        <span>STATUS DA FROTA</span>
+                        <span id="kpiTotalAtivos">0 ATIVOS</span>
                     </div>
                 </div>
 
                 <div class="active-asset-banner">
                     <div class="banner-top-row">
                         <div>
-                            <div class="banner-title" id="bannerLocoTitle">CARREGANDO ATIVO...</div>
-                            <div class="banner-sub" id="bannerLocoSub">Subsistema ativo selecionado</div>
-                            
-                            <div class="lead-time-boxes">
-                                <div class="lead-time-pill" id="pillLeadMotor">
-                                    <span>Motor Diesel:</span> <b id="leadMotorDias">Calculando...</b>
-                                </div>
-                                <div class="lead-time-pill" id="pillLeadComp">
-                                    <span>Compressor:</span> <b id="leadCompDias">Calculando...</b>
-                                </div>
-                            </div>
+                            <div id="activeAssetTitle" class="banner-title">SELECIONE UM ATIVO</div>
+                            <div id="activeAssetMeta" class="banner-sub">TAG • SISTEMA • ÚLTIMA AMOSTRA</div>
                         </div>
-
-                        <button class="btn-open-drawer" onclick="window.abrirGavetaAtivos()">
-                            SELECIONAR LOCOMOTIVA
+                        <button class="btn-open-drawer" onclick="window.toggleDrawer(true)">
+                            <span>☰ FROTA & ATIVOS</span>
                         </button>
                     </div>
 
-                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--card-border); padding-top:10px; margin-top:12px; font-family:'JetBrains Mono'; font-size:11px; color:var(--text-muted);">
-                        <span>Status em tempo real sincronizado</span>
-                        <span id="labelTotalFrotaTop" style="color:var(--accent-gold); font-weight:700;">FROTA ATIVA</span>
+                    <div class="lead-time-boxes">
+                        <div class="lead-time-pill">
+                            <span>VISCOSIDADE (cSt):</span>
+                            <b id="kpiViscosidade">--</b>
+                        </div>
+                        <div class="lead-time-pill">
+                            <span>TAN / TBN:</span>
+                            <b id="kpiTanTbn">--</b>
+                        </div>
+                        <div class="lead-time-pill">
+                            <span>CONTAMINAÇÃO (ISO):</span>
+                            <b id="kpiIso">--</b>
+                        </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- 2. ABAS DE SUBSISTEMA -->
+            <!-- 2. ABAS DE SISTEMA -->
             <div class="system-tabs">
-                <button class="sys-tab-btn active" id="tabMotor" onclick="window.alternarSistema('MOTOR_DIESEL')">
-                    SAÚDE DO MOTOR DIESEL (GE 7FDL12)
-                </button>
-                <button class="sys-tab-btn" id="tabComp" onclick="window.alternarSistema('COMPRESSOR_AR')">
-                    SAÚDE DO COMPRESSOR DE AR (WABCO 3CDC)
-                </button>
+                <button class="sys-tab-btn active" data-sys="hidraulico" onclick="window.selecionarSistema('hidraulico', this)">SISTEMA HIDRÁULICO</button>
+                <button class="sys-tab-btn" data-sys="motor" onclick="window.selecionarSistema('motor', this)">MOTOR DIESEL</button>
+                <button class="sys-tab-btn" data-sys="transmissao" onclick="window.selecionarSistema('transmissao', this)">TRANSMISSÃO & EIXOS</button>
             </div>
 
-            <!-- 3. DETALHAMENTO: HISTÓRICO COM ROLAGEM + CARD MESTRE DE GRÁFICOS ANALÍTICOS -->
-            <div class="detail-split-grid" id="mainDetailSplitGrid" style="margin-bottom: 20px;">
-                
-                <div class="content-box left-timeline-panel" id="panelTimelineContainer">
-                    <div class="content-box-title">
-                        <span id="titleHistorico">HISTÓRICO DE ANÁLISES & LAUDOS</span>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <select id="filtroOrdenacao" onchange="window.renderizarTimelineLoco()" style="width:auto; margin:0; padding:4px 8px; font-size:10px; height:28px;">
-                                <option value="RECENTES">MAIS RECENTES</option>
-                                <option value="ANTIGOS">MAIS ANTIGAS</option>
-                            </select>
-                            <span id="badgeLocoFoco" style="color:var(--accent-gold); font-size:11px;">-</span>
-                            <button type="button" class="btn-icon-symbol" id="btnFocoLaudosFluido" onclick="window.alternarFocoPainelFluido('LAUDOS')" title="Ampliar">⤢</button>
-                            <button type="button" class="btn-toggle-symbol" onclick="window.toggleMinimizarFluido('listaLaudosTimeline', this)" title="Minimizar">—</button>
+            <!-- 3. PAINEL DIVIDIDO: LAUDOS/FORMULÁRIO + GRÁFICOS -->
+            <div class="detail-split-grid" id="detailSplitGrid">
+
+                <!-- COLUNA ESQUERDA: NOVO LAUDO + HISTÓRICO -->
+                <div class="left-timeline-panel">
+                    <div class="content-box" style="margin-bottom: 16px;">
+                        <div class="content-box-title">
+                            <span>NOVO LAUDO TÉCNICO DE FLUIDO</span>
+                            <button type="button" class="btn-toggle-symbol" onclick="window.toggleCollapse('novoLaudoBody', this)">—</button>
+                        </div>
+                        <div id="novoLaudoBody" class="collapsible-body">
+                            <form id="formNovoLaudo" onsubmit="window.salvarLaudo(event)" class="form-grid-layout">
+                                <div class="field-group">
+                                    <label>DATA DA COLETA</label>
+                                    <input type="date" id="laudoData" required>
+                                </div>
+                                <div class="field-group">
+                                    <label>CONDIÇÃO / DIAGNÓSTICO</label>
+                                    <select id="laudoStatus">
+                                        <option value="NORMAL">NORMAL</option>
+                                        <option value="ATENÇÃO">ATENÇÃO</option>
+                                        <option value="CRÍTICA">CRÍTICA</option>
+                                    </select>
+                                </div>
+                                <div class="field-group">
+                                    <label>VISCOSIDADE (cSt @ 40°C)</label>
+                                    <input type="number" step="0.1" id="laudoVisc" placeholder="Ex: 46.2">
+                                </div>
+                                <div class="field-group">
+                                    <label>CÓDIGO ISO / CONTAMINAÇÃO</label>
+                                    <input type="text" id="laudoIso" placeholder="Ex: 18/16/13">
+                                </div>
+                                <div class="field-group full-width">
+                                    <label>PARECER / OBSERVAÇÕES DO LABORATÓRIO</label>
+                                    <textarea id="laudoResumo" rows="2" placeholder="Descreva metais de desgaste, água, fuligem ou aditivação..." required></textarea>
+                                </div>
+                                <div class="field-group full-width">
+                                    <label>RECOMENDAÇÃO / AÇÃO CORRETIVA</label>
+                                    <input type="text" id="laudoAcao" placeholder="Ex: Troca de filtros de retorno e nova coleta em 250h">
+                                </div>
+                                <div class="full-width">
+                                    <button type="submit" class="btn-action">REGISTRAR LAUDO</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    
-                    <div id="listaLaudosTimeline" class="scrollable-feed collapsible-body">
-                        <div style="text-align:center; padding:50px; color:var(--text-muted); font-family:'JetBrains Mono'; font-size:12px;">
-                            Selecione um ativo na gaveta para carregar o histórico...
+
+                    <div class="content-box" style="flex: 1;">
+                        <div class="content-box-title">
+                            <span>HISTÓRICO DE ANÁLISES</span>
+                            <button type="button" class="btn-toggle-symbol" onclick="window.toggleCollapse('historicoLaudosBody', this)">—</button>
+                        </div>
+                        <div id="historicoLaudosBody" class="collapsible-body">
+                            <div id="listaLaudos" class="scrollable-feed"></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="right-chart-panel" id="panelChartsContainer">
+                <!-- COLUNA DIREITA: CARROSSEL DE GRÁFICOS -->
+                <div class="right-chart-panel">
                     <div class="chart-box-master-fluido">
-                        <div class="chart-master-header">
-                            <div class="chart-master-title">
-                                <span id="labelNomeGraficoAtivoFluido">VOLUME DE LAUDOS POR LOCOMOTIVA (ORDEM DECRESCENTE)</span>
-                            </div>
-
-                            <div id="filtrosInlineTemporalFluido" style="display:none; align-items:center; gap:6px;">
-                                <select id="selAnoTemporalFluido" onchange="window.atualizarGraficoTemporalFluido()" style="margin:0; padding:4px 8px; font-size:11px; width:auto; height:28px;"></select>
-                                <select id="selLocoTemporalFluido" onchange="window.atualizarGraficoTemporalFluido()" style="margin:0; padding:4px 8px; font-size:11px; width:auto; height:28px;">
-                                    <option value="TODAS">FROTA COMPLETA</option>
-                                </select>
-                            </div>
-
-                            <div class="chart-nav-controls">
-                                <button type="button" class="btn-icon-symbol" id="btnFocoGraficosFluido" onclick="window.alternarFocoPainelFluido('GRAFICOS')" title="Ampliar">⤢</button>
-                                <button type="button" class="btn-chart-nav" onclick="window.navegarGraficoFluido(-1)" title="Gráfico Anterior">◀</button>
-                                <span class="chart-nav-indicator" id="indicadorSlideGraficoFluido">1 / 3</span>
-                                <button type="button" class="btn-chart-nav" onclick="window.navegarGraficoFluido(1)" title="Próximo Gráfico">▶</button>
-                                <button type="button" class="btn-toggle-symbol" onclick="window.toggleMinimizarFluido('bodyMasterChartsFluido', this)" title="Minimizar">—</button>
-                            </div>
-                        </div>
-
-                        <div id="bodyMasterChartsFluido" class="collapsible-body">
-                            <div id="slideGraficoFluido1" class="chart-view-slide active">
-                                <canvas id="chartLocosFluidoBar"></canvas>
-                            </div>
-
-                            <div id="slideGraficoFluido2" class="chart-view-slide">
-                                <canvas id="chartSistemasFluidoPie"></canvas>
-                            </div>
-
-                            <div id="slideGraficoFluido3" class="chart-view-slide">
-                                <canvas id="chartTemporalFluidoBar"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- 4. PAINEL DE REGISTRO E EDIÇÃO COMPLETA -->
-            <div class="content-box" id="painelAdminCadastro">
-                <div class="content-box-title">
-                    <span id="formTitle">REGISTRAR NOVA ANÁLISE</span>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <button type="button" class="btn-acao-inline" onclick="window.limparFormularioCampos()" style="font-size:10px; padding:4px 9px;" title="Limpar campos de digitação">LIMPAR CAMPOS</button>
-                        <button type="button" class="btn-toggle-symbol" onclick="window.toggleMinimizarFluido('bodyAdminCadastroForm', this)" title="Minimizar">—</button>
-                    </div>
-                </div>
-
-                <div id="bodyAdminCadastroForm" class="collapsible-body">
-                    <form onsubmit="event.preventDefault(); window.salvarNovaAnalise();">
-                        <input type="hidden" id="editLaudoId">
-
-                        <div class="form-grid-layout">
-                            
-                            <div class="field-group">
-                                <label>LOCOMOTIVA ALVO</label>
-                                <select id="cadLocoForm"></select>
-                            </div>
-
-                            <div class="field-group">
-                                <label>SUBSISTEMA</label>
-                                <select id="cadCompForm">
-                                    <option value="MOTOR_DIESEL">Motor Diesel</option>
-                                    <option value="COMPRESSOR_AR">Compressor de Ar</option>
-                                </select>
-                            </div>
-
-                            <div class="field-group">
-                                <label>CRITICIDADE</label>
-                                <select id="cadCritForm">
-                                    <option value="NORMAL">Normal (Sem Restrições)</option>
-                                    <option value="ATENÇÃO">Atenção (Alerta)</option>
-                                    <option value="CRÍTICA">Crítica (Intervenção Imediata)</option>
-                                </select>
-                            </div>
-
-                            <div class="field-group">
-                                <label>STATUS INTERVENÇÃO</label>
-                                <select id="cadStatusIntervForm">
-                                    <option value="PENDENTE">PENDENTE / EM ABERTO</option>
-                                    <option value="CONCLUIDO">CONCLUÍDO / LIBERADO</option>
-                                </select>
-                            </div>
-
-                            <div class="field-group">
-                                <label>DATA DA COLETA</label>
-                                <input type="text" id="cadDataColetaForm" placeholder="DD/MM/AAAA" maxlength="10" required>
-                            </div>
-
-                            <div class="field-group">
-                                <label>DATA DO LAUDO</label>
-                                <input type="text" id="cadDataLaudoForm" placeholder="DD/MM/AAAA" maxlength="10">
-                            </div>
-
-                            <div class="field-group full-width">
-                                <label>Nº DO LAUDO / LABORATÓRIO</label>
-                                <input type="text" id="cadNumLaudoForm" placeholder="Ex: LAB-8891 / Relatório Interno">
-                            </div>
-
-                            <div class="field-group full-width">
-                                <label>DIAGNÓSTICO TÉCNICO CONCLUSIVO</label>
-                                <textarea id="cadDiagForm" rows="3" placeholder="Descreva os achados da análise (aspecto visual, contaminação, diluição, borra)..."></textarea>
-                            </div>
-
-                            <div class="field-group full-width">
-                                <label>RECOMENDAÇÃO OPERACIONAL</label>
-                                <textarea id="cadAcaoForm" rows="2" placeholder="Ação da oficina (antecipação de coleta, troca de filtros, re-inspeção)..."></textarea>
-                            </div>
-
-                            <div class="field-group full-width" style="background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; margin-bottom: 8px;">
-                                <label style="color:var(--accent-gold); margin-bottom:6px;">LIBERAÇÃO TÉCNICA / ATIVIDADES DA OFICINA</label>
-                                <div style="display:grid; grid-template-columns: 1fr 2fr; gap:10px;">
-                                    <div>
-                                        <label style="font-size:9.5px;">DATA LIBERAÇÃO</label>
-                                        <input type="text" id="cadDataConcForm" placeholder="DD/MM/AAAA" maxlength="10" style="margin-bottom:0;">
-                                    </div>
-                                    <div>
-                                        <label style="font-size:9.5px;">AÇÕES EXECUTADAS</label>
-                                        <input type="text" id="cadAtivCorrForm" placeholder="Reparos executados pela oficina..." style="margin-bottom:0;">
-                                    </div>
+                        <div>
+                            <div class="chart-master-header">
+                                <div class="chart-master-title">
+                                    <span id="chartSlideTitle">TENDÊNCIA DE VISCOSIDADE (cSt)</span>
+                                </div>
+                                <div class="chart-nav-controls">
+                                    <button type="button" class="btn-chart-nav" onclick="window.mudarSlideGrafico(-1)">◀</button>
+                                    <span id="chartSlideIndicator" class="chart-nav-indicator">1 / 2</span>
+                                    <button type="button" class="btn-chart-nav" onclick="window.mudarSlideGrafico(1)">▶</button>
                                 </div>
                             </div>
 
-                            <div class="field-group full-width">
-                                <input type="file" id="photoInputFluido" accept="image/*" style="display:none;" onchange="window.processarFotoFluido(this)">
-                                <button type="button" onclick="document.getElementById('photoInputFluido').click()" style="background:var(--iron); color:var(--text-main); border:1px solid var(--card-border); padding:10px 14px; border-radius:6px; font-family:'JetBrains Mono'; font-size:11px; cursor:pointer; width:100%;">ANEXAR EVIDÊNCIAS VISUAIS / FOTO LAUDO</button>
-                                <div id="previewUploadFluido" style="display:flex; gap:8px; margin-top:8px;"></div>
+                            <div class="chart-view-slide active" id="slideGrafico0">
+                                <canvas id="canvasViscosidade"></canvas>
                             </div>
-
-                            <div class="field-group full-width">
-                                <label>AUTENTICAÇÃO DO INSPETOR</label>
-                                <input type="password" id="adminPassFluido" placeholder="Senha Operacional" required>
+                            <div class="chart-view-slide" id="slideGrafico1">
+                                <canvas id="canvasStatusHist"></canvas>
                             </div>
-
-                            <div class="field-group full-width" style="display:flex; gap:8px;">
-                                <button type="submit" class="btn-action" id="btnSalvarAnalise" style="flex:1;">GRAVAR ANÁLISE NO BANCO</button>
-                                <button type="button" onclick="window.cancelarEdicao()" id="btnCancelarEdicao" style="display:none; background:transparent; border:1px solid var(--card-border); color:var(--text-muted); padding:10px; border-radius:6px; font-family:'JetBrains Mono'; cursor:pointer;">CANCELAR</button>
-                            </div>
-
                         </div>
-                    </form>
+
+                        <div class="kpi-square-footer">
+                            <span>REFERÊNCIA ISO / ASTM</span>
+                            <span>ATUALIZAÇÃO EM TEMPO REAL</span>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
-            <!-- RODAPE DE ACOES -->
+            <!-- 4. BARRA INFERIOR DE AÇÕES -->
             <div class="bottom-action-bar">
-                <div style="font-family:'JetBrains Mono'; font-size:11px; color:var(--text-muted)">
-                    <strong style="color:var(--text-main)">M.A.T.H. SYSTEM ACCESS</strong> — DATABASE SYNCHRONIZED
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button type="button" class="btn-action secondary" onclick="window.exportarPDF()">EXPORTAR RELATÓRIO PDF</button>
+                    <button type="button" class="btn-action secondary" onclick="window.alternarFoco('laudos')">FOCO LAUDOS</button>
+                    <button type="button" class="btn-action secondary" onclick="window.alternarFoco('graficos')">FOCO GRÁFICOS</button>
+                    <button type="button" class="btn-action secondary" onclick="window.alternarFoco('split')">TELA DIVIDIDA</button>
                 </div>
-                <div style="display:flex; gap:10px;">
-                    <button class="btn-action secondary" onclick="window.abrirModalSenhaPDFFluido()">GERAR RELATÓRIO PDF</button>
-                </div>
+                <button type="button" class="btn-action secondary" onclick="window.abrirModalNovoAtivo()">+ NOVO ATIVO</button>
             </div>
 
         </div>
     </div>
 
-    <!-- MODAL DE SENHA PARA EMISSAO DE PDF -->
-    <div class="modal-overlay" id="modalPDFFluidoOverlay" data-backdrop="static" data-keyboard="false">
-        <div class="modal-card-pro modal-dialog">
-            <div class="modal-title-pro">
-                <span>AUTORIZAÇÃO PARA EMISSÃO DE PDF</span>
-            </div>
-            <div class="modal-desc-pro">
-                Informe a senha operacional do inspetor para gerar e autenticar o relatório técnico de fluidos.
-            </div>
-
-            <div class="modal-form-group">
-                <label>AUTENTICAÇÃO DO INSPETOR (SENHA)</label>
-                <input type="password" id="modalPDFFluidoPass" placeholder="Senha Operacional" style="margin-bottom:0;">
-            </div>
-
-            <div class="modal-btn-row">
-                <button type="button" class="btn-modal-cancel" onclick="window.fecharModalSenhaPDFFluido()">CANCELAR</button>
-                <button type="button" class="btn-modal-confirm" onclick="window.confirmarEmissaoPDFFluido()">EMITIR PDF</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DE COMPARTILHAMENTO PROFISSIONAL -->
-    <div class="modal-overlay" id="modalCompartilharOverlay" data-backdrop="static" data-keyboard="false">
-        <div class="modal-card-pro modal-dialog">
-            <div class="modal-title-pro">
-                <span>DIRETRIZ DE COMPARTILHAMENTO TEMPORÁRIO</span>
-            </div>
-            <div class="modal-desc-pro">
-                Gere uma chave segura criptografada com validade pré-fixada para acesso restrito de visualização móvel ou desktop.
-            </div>
-
-            <div class="modal-form-group">
-                <label>TEMPO DE VALIDADE DO ACESSO</label>
-                <select id="modalShareTempo" style="margin-bottom:0;">
-                    <option value="12">12 Horas (Turno Operacional)</option>
-                    <option value="24" selected>24 Horas (Padrão Diário)</option>
-                    <option value="48">48 Horas (Fim de Semana)</option>
-                    <option value="72">72 Horas (Liberação Ampliada)</option>
-                    <option value="168">7 Dias (Auditoria Semanal)</option>
-                </select>
-            </div>
-
-            <div class="modal-form-group">
-                <label>AUTENTICAÇÃO DO INSPETOR (SENHA)</label>
-                <input type="password" id="modalSharePass" placeholder="Senha Operacional" style="margin-bottom:0;">
-            </div>
-
-            <div class="modal-btn-row">
-                <button type="button" class="btn-modal-cancel" onclick="window.fecharModalCompartilhamentoFluido()">CANCELAR</button>
-                <button type="button" class="btn-modal-confirm" onclick="window.executarCompartilhamentoProFluido()">GERAR E ENVIAR</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- GAVETA LATERAL RETRÁTIL -->
-    <div class="drawer-overlay" id="drawerOverlay" onclick="window.fecharGavetaAtivos()"></div>
-    <div class="drawer-container" id="drawerContainer">
+    <!-- GAVETA LATERAL: FROTA E ATIVOS -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="window.toggleDrawer(false)"></div>
+    <aside class="drawer-container" id="drawerContainer">
         <div class="drawer-header">
-            <h3>GAVETA DE ATIVOS</h3>
-            <button class="btn-close-drawer" onclick="window.fecharGavetaAtivos()">✕</button>
+            <h3>FROTA & ATIVOS</h3>
+            <button type="button" class="btn-close-drawer" onclick="window.toggleDrawer(false)">✕</button>
         </div>
-
         <div class="drawer-controls">
-            <div style="display:flex; gap:6px;">
-                <input type="text" id="drawerSearchPrefix" class="drawer-search-input" placeholder="Buscar Prefixo..." oninput="window.filtrarGavetaAtivos()">
-                <button type="button" onclick="window.abrirModalNovoAtivo()" class="btn-action" style="padding:0 12px; font-size:10px; white-space:nowrap; width:auto; height:38px;">ADICIONAR</button>
-            </div>
-            
+            <input type="text" id="drawerSearch" class="drawer-search-input" placeholder="Buscar por TAG, modelo ou frota..." oninput="window.renderDrawerList()">
             <div class="drawer-filter-chips">
-                <button type="button" class="drawer-chip-btn active" id="chipSubMotor" onclick="window.setFiltroSistemaGaveta('MOTOR_DIESEL')">MOTOR DIESEL</button>
-                <button type="button" class="drawer-chip-btn" id="chipSubComp" onclick="window.setFiltroSistemaGaveta('COMPRESSOR_AR')">COMPRESSOR</button>
+                <button type="button" class="drawer-chip-btn active" data-filter="ALL" onclick="window.setDrawerFilter('ALL', this)">TODOS</button>
+                <button type="button" class="drawer-chip-btn" data-filter="CRÍTICA" onclick="window.setDrawerFilter('CRÍTICA', this)">CRÍTICOS</button>
+                <button type="button" class="drawer-chip-btn" data-filter="ATENÇÃO" onclick="window.setDrawerFilter('ATENÇÃO', this)">ATENÇÃO</button>
             </div>
         </div>
-
-        <div class="drawer-body" id="drawerAtivosList"></div>
-
+        <div class="drawer-body" id="drawerAssetList"></div>
         <div class="drawer-footer">
-            <button class="btn-action" onclick="window.abrirModalNovoAtivo()" style="font-size:11px; padding:11px;">
-                CADASTRAR NOVA LOCOMOTIVA
-            </button>
+            <button type="button" class="btn-action" onclick="window.abrirModalNovoAtivo()">+ CADASTRAR NOVO ATIVO</button>
         </div>
-    </div>
+    </aside>
 
-    <!-- MODAL DE SENHA PARA EXCLUIR ATIVO -->
-    <div class="modal-overlay" id="modalDelAsset" data-backdrop="static" data-keyboard="false">
-        <div class="modal-card-pro modal-dialog" style="max-width:380px;">
-            <div class="modal-title-pro">
-                <span>EXCLUIR ATIVO DA BASE</span>
-            </div>
-            <div class="modal-desc-pro" id="modalDelAssetSub">
-                Confirmação de exclusão permanente do ativo.
-            </div>
-            <div class="modal-form-group">
-                <label>AUTENTICAÇÃO DO INSPETOR (SENHA)</label>
-                <input type="password" id="modalDelAssetPass" placeholder="Senha Operacional" style="margin-bottom:0;">
-            </div>
-            <div class="modal-btn-row">
-                <button type="button" onclick="window.fecharModalDelAtivo()" class="btn-modal-cancel">CANCELAR</button>
-                <button type="button" onclick="window.confirmarExclusaoAtivo()" class="btn-modal-confirm" style="background:var(--accent-red); color:#fff;">CONFIRMAR</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- LIGHTBOX -->
-    <div class="lightbox" id="appLightbox" onclick="this.style.display='none'">
-        <img id="lightboxImg" src="" alt="Evidência Ampliada">
-    </div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, push, update, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    const firebaseConfig = { apiKey: "AIzaSyArTUjStVg-JrYZq0xNgh59w_aYZmWq7Y8", authDomain: "mathfrotage.firebaseapp.com", databaseURL: "https://mathfrotage-default-rtdb.firebaseio.com", projectId: "mathfrotage", storageBucket: "mathfrotage.firebasestorage.app", messagingSenderId: "148867753477", appId: "1:148867753477:web:9048ce8ed2b1ffbb651e6c" };
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    const USER_ADMIN = "MATHEUS";
-    const SENHA = "COELHO456";
-
-    let listaAtivos = [];
-    let listaAtivosUnicos = [];
-    let sistemaAtivo = "MOTOR_DIESEL";
-    let locoSelecionada = "2613";
-    let todosLaudos = [];
-    let fotosTemp = [];
-
-    let filtroGavetaSistema = "MOTOR_DIESEL";
-    let ativoParaExcluir = null;
-
-    let barChartFluido = null;
-    let pieChartFluido = null;
-    let temporalChartFluido = null;
-    let slideGraficoFluidoAtual = 1;
-    let modoFocoFluido = "PADRAO";
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const tokenAcesso = urlParams.get('token');
-
-    const mesesNomesAbrev = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-
-    /* MASCARA E TRATAMENTO REGIONAL BRASILEIRO (DD/MM/AAAA) */
-    const aplicarMascaraDataBR = (input) => {
-        if (!input) return;
-        input.addEventListener('input', (e) => {
-            let v = e.target.value.replace(/\D/g, '').slice(0, 8);
-            if (v.length >= 5) {
-                v = `${v.slice(0, 2)}/${v.slice(2, 4)}/${v.slice(4)}`;
-            } else if (v.length >= 3) {
-                v = `${v.slice(0, 2)}/${v.slice(2)}`;
-            }
-            e.target.value = v;
-        });
-    };
-
-    const obterDataAtualBR = () => {
-        const d = new Date();
-        const dia = String(d.getDate()).padStart(2, '0');
-        const mes = String(d.getMonth() + 1).padStart(2, '0');
-        const ano = d.getFullYear();
-        return `${dia}/${mes}/${ano}`;
-    };
-
-    const normalizarTexto = (txt) => {
-        if (!txt) return "";
-        return String(txt).normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toUpperCase();
-    };
-
-    const limparParaPDF = (txt) => {
-        if (!txt) return "";
-        return String(txt).normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\x20-\x7E]/g, "").replace(/\s+/g, ' ').trim();
-    };
-
-    const parseDataSegura = (str) => {
-        if (!str) return 0;
-        if (typeof str === 'string' && str.includes('/')) {
-            const p = str.split('/');
-            if (p.length === 3) return new Date(`${p[2]}-${p[1]}-${p[0]}`).getTime() || 0;
-        }
-        if (typeof str === 'string' && str.includes('-')) {
-            const p = str.split('-');
-            if (p.length === 3) {
-                if (p[0].length === 4) return new Date(`${p[0]}-${p[1]}-${p[2]}`).getTime() || 0;
-                return new Date(`${p[2]}-${p[1]}-${p[0]}`).getTime() || 0;
-            }
-        }
-        return new Date(str).getTime() || 0;
-    };
-
-    const formatarData = (str) => {
-        if (!str) return 'N/I';
-        if (typeof str === 'string' && str.includes('/')) return str;
-        if (typeof str === 'string' && str.includes('-')) {
-            const p = str.split('-');
-            if (p.length === 3) {
-                if (p[0].length === 4) return `${p[2]}/${p[1]}/${p[0]}`;
-                return `${p[0]}/${p[1]}/${p[2]}`;
-            }
-        }
-        return String(str);
-    };
-
-    const converterParaDataArmazenamento = (str) => {
-        if (!str) return "";
-        const limpo = str.trim();
-        if (limpo.includes('/')) {
-            const p = limpo.split('/');
-            if (p.length === 3 && p[2].length === 4) return `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
-        }
-        return limpo;
-    };
-
-    const pertenceALocomotiva = (locoSalva, prefixoBuscado) => {
-        const s1 = String(locoSalva || '').replace(/\D/g, '');
-        const s2 = String(prefixoBuscado || '').replace(/\D/g, '');
-        return s1 === s2 || String(locoSalva).includes(prefixoBuscado);
-    };
-
-    const pertenceAoComponente = (compSalvo, subBuscado) => {
-        const c = normalizarTexto(compSalvo);
-        if (subBuscado === 'MOTOR_DIESEL') return c.includes('MOTOR') || c.includes('MEC');
-        if (subBuscado === 'COMPRESSOR_AR') return c.includes('COMPRESSOR') || c.includes('PNEUM') || c.includes('3CDC');
-        return false;
-    };
-
-    /* CONTROLE GLOBAL DOS METODOS DE ACESSO */
-    window.executarLogin = () => {
-        const u = document.getElementById("loginUser").value.trim().toUpperCase();
-        const p = document.getElementById("loginPass").value;
-
-        if (u === USER_ADMIN && p === SENHA) {
-            localStorage.setItem("fluidos_session", "matheus");
-            inicializarAplicacao();
-        } else {
-            alert("Acesso negado. Credenciais incorretas.");
-        }
-    };
-
-    window.executarLogout = () => {
-        localStorage.removeItem("fluidos_session");
-        location.reload();
-    };
-
-    window.abrirGavetaAtivos = () => {
-        const overlay = document.getElementById("drawerOverlay");
-        const container = document.getElementById("drawerContainer");
-        if (overlay) overlay.classList.add("active");
-        if (container) container.classList.add("active");
-        window.filtrarGavetaAtivos();
-    };
-
-    window.fecharGavetaAtivos = () => {
-        const overlay = document.getElementById("drawerOverlay");
-        const container = document.getElementById("drawerContainer");
-        if (overlay) overlay.classList.remove("active");
-        if (container) container.classList.remove("active");
-    };
-
-    window.setFiltroSistemaGaveta = (sistema) => {
-        filtroGavetaSistema = sistema;
-        const btnM = document.getElementById("chipSubMotor");
-        const btnC = document.getElementById("chipSubComp");
-        if (btnM) btnM.classList.toggle("active", sistema === "MOTOR_DIESEL");
-        if (btnC) btnC.classList.toggle("active", sistema === "COMPRESSOR_AR");
-        window.filtrarGavetaAtivos();
-    };
-
-    window.filtrarGavetaAtivos = () => {
-        const inputBusca = document.getElementById("drawerSearchPrefix");
-        const query = inputBusca ? inputBusca.value.trim().toLowerCase() : "";
-        const container = document.getElementById("drawerAtivosList");
-        if (!container) return;
-        container.innerHTML = "";
-
-        const filtrados = listaAtivosUnicos.filter(a => {
-            return String(a.prefixo || '').toLowerCase().includes(query) || String(a.modelo || '').toLowerCase().includes(query);
-        });
-
-        if (filtrados.length === 0) {
-            container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:11px; font-family:'JetBrains Mono';">Nenhum ativo localizado com o filtro aplicado.</div>`;
-            return;
-        }
-
-        filtrados.forEach(a => {
-            let status = "SEM_LAUDO";
-            let icone = "⚪";
-
-            const laudosAvaliar = todosLaudos.filter(l => pertenceALocomotiva(l.locomotiva, a.prefixo) && pertenceAoComponente(l.componente || l.sistema, filtroGavetaSistema));
-            laudosAvaliar.sort((x, y) => parseDataSegura(y.dataColeta) - parseDataSegura(x.dataColeta));
-
-            if (laudosAvaliar.length > 0) {
-                const ultimo = laudosAvaliar[0];
-                const interv = normalizarTexto(ultimo.statusIntervencao);
-                const crit = normalizarTexto(ultimo.criticidade);
-
-                if (interv === "CONCLUIDO") {
-                    status = "LIBERADO";
-                    icone = "🟢";
-                } else if (crit.includes("CRITICA")) {
-                    status = "CRÍTICA";
-                    icone = "🔴";
-                } else if (crit.includes("ATENCAO")) {
-                    status = "ATENÇÃO";
-                    icone = "🟡";
-                } else {
-                    status = "NORMAL";
-                    icone = "🟢";
-                }
-            }
-
-            const isSelected = (String(a.prefixo) === String(locoSelecionada)) ? "selected" : "";
-            const labelSubFiltro = filtroGavetaSistema === "MOTOR_DIESEL" ? "Motor Diesel" : "Compressor 3CDC";
-
-            const divItem = document.createElement("div");
-            divItem.className = `drawer-item ${isSelected}`;
-            divItem.innerHTML = `
-                <div style="flex:1;">
-                    <div style="font-family:'JetBrains Mono'; font-weight:800; font-size:13px; color:var(--text-main);">${a.modelo || 'GE-U20-C'} ${a.prefixo}</div>
-                    <div style="font-size:10px; color:var(--text-muted); font-family:'JetBrains Mono'; margin-top:2px;">[${labelSubFiltro}] Condição: ${status}</div>
+    <!-- MODAL NOVO ATIVO -->
+    <div class="modal-overlay" id="modalNovoAtivo">
+        <div class="modal-card-pro">
+            <div class="modal-title-pro">NOVO ATIVO</div>
+            <div class="modal-desc-pro">Cadastre um equipamento para acompanhar os laudos de fluidos.</div>
+            <form id="formNovoAtivo" onsubmit="window.salvarNovoAtivo(event)">
+                <div class="modal-form-group">
+                    <label>TAG DO EQUIPAMENTO</label>
+                    <input type="text" id="novoAtivoTag" placeholder="Ex: ESC-04" required>
                 </div>
-                <div style="display:flex; align-items:center;">
-                    <span style="font-size:16px;">${icone}</span>
-                    ${!tokenAcesso ? `<button type="button" class="btn-del-asset" title="Excluir Ativo">🗑️</button>` : ''}
-                </div>`;
-
-            divItem.querySelector("div").addEventListener("click", () => {
-                window.selecionarAtivoViaGaveta(a.prefixo);
-            });
-
-            if (!tokenAcesso) {
-                const btnDel = divItem.querySelector(".btn-del-asset");
-                if (btnDel) {
-                    btnDel.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        window.abrirModalDelAtivo(a.id, a.prefixo);
-                    });
-                }
-            }
-
-            container.appendChild(divItem);
-        });
-    };
-
-    window.selecionarAtivoViaGaveta = (prefixo) => {
-        locoSelecionada = String(prefixo).replace(/\D/g, '') || String(prefixo);
-        window.fecharGavetaAtivos();
-        atualizarBannerAtivo();
-        window.renderizarTimelineLoco();
-        atualizarCardContabilizacao();
-    };
-
-    window.alternarSistema = (sistema) => {
-        sistemaAtivo = sistema;
-        filtroGavetaSistema = sistema;
-        const tabM = document.getElementById("tabMotor");
-        const tabC = document.getElementById("tabComp");
-        const cadComp = document.getElementById("cadCompForm");
-        if (tabM) tabM.classList.toggle("active", sistema === "MOTOR_DIESEL");
-        if (tabC) tabC.classList.toggle("active", sistema === "COMPRESSOR_AR");
-        if (cadComp) cadComp.value = sistema;
-        atualizarBannerAtivo();
-        window.renderizarTimelineLoco();
-        atualizarCardContabilizacao();
-    };
-
-    const consolidarAtivosSemDuplicatas = () => {
-        const mapUnicos = new Map();
-        listaAtivos.forEach(a => {
-            const prefixoLimpo = String(a.prefixo || '').replace(/\D/g, '') || String(a.prefixo || '').trim();
-            if (prefixoLimpo && !mapUnicos.has(prefixoLimpo)) {
-                mapUnicos.set(prefixoLimpo, {
-                    ...a,
-                    prefixo: prefixoLimpo
-                });
-            }
-        });
-        listaAtivosUnicos = Array.from(mapUnicos.values());
-    };
-
-    window.abrirModalDelAtivo = (id, prefixo) => {
-        ativoParaExcluir = { id, prefixo };
-        const sub = document.getElementById("modalDelAssetSub");
-        const pass = document.getElementById("modalDelAssetPass");
-        if (sub) sub.innerText = `EXCLUIR ATIVO ${prefixo}`;
-        if (pass) pass.value = "";
-        const modal = document.getElementById("modalDelAsset");
-        if (modal) modal.classList.add("active");
-        setTimeout(() => { if (pass) pass.focus(); }, 100);
-    };
-
-    window.fecharModalDelAtivo = () => {
-        ativoParaExcluir = null;
-        const modal = document.getElementById("modalDelAsset");
-        if (modal) modal.classList.remove("active");
-    };
-
-    window.confirmarExclusaoAtivo = async () => {
-        const pass = document.getElementById("modalDelAssetPass").value;
-        if (pass !== SENHA) return alert("Senha incorreta! Operação cancelada.");
-        if (!ativoParaExcluir) return;
-
-        try {
-            await remove(ref(db, `ativos/${ativoParaExcluir.id}`));
-            alert(`Ativo ${ativoParaExcluir.prefixo} excluído com sucesso.`);
-            window.fecharModalDelAtivo();
-        } catch(err) {
-            alert("Erro ao excluir ativo: " + err.message);
-        }
-    };
-
-    window.abrirModalNovoAtivo = () => {
-        const pass = prompt("Autenticação Admin:");
-        if (pass !== SENHA) return alert("Senha incorreta!");
-
-        const modelo = prompt("Digite o Modelo da Locomotiva (ex: GE, GE-U20-C, BB36-7):", "GE-U20-C");
-        if (!modelo) return;
-
-        const prefixo = prompt("Digite o Prefixo da Locomotiva (ex: 3161):");
-        if (!prefixo) return;
-
-        const prefixoLimpo = prefixo.replace(/\D/g, '') || prefixo.trim();
-
-        if (listaAtivosUnicos.some(a => a.prefixo === prefixoLimpo)) {
-            return alert("Este prefixo já está cadastrado!");
-        }
-
-        push(ref(db, 'ativos'), {
-            modelo: modelo.trim().toUpperCase(),
-            prefixo: prefixoLimpo
-        }).then(() => {
-            alert(`Locomotiva ${modelo} ${prefixoLimpo} cadastrada com sucesso!`);
-            window.filtrarGavetaAtivos();
-        }).catch(err => alert("Erro ao salvar: " + err.message));
-    };
-
-    const atualizarBannerAtivo = () => {
-        const obj = listaAtivosUnicos.find(a => a.prefixo === locoSelecionada);
-        const mod = obj ? obj.modelo : "GE-U20-C";
-        const titleEl = document.getElementById("bannerLocoTitle");
-        const subEl = document.getElementById("bannerLocoSub");
-        const badgeEl = document.getElementById("badgeLocoFoco");
-
-        if (titleEl) titleEl.innerText = `${mod} ${locoSelecionada}`;
-        if (subEl) subEl.innerText = `Foco ativo em ${sistemaAtivo === 'MOTOR_DIESEL' ? 'Motor Diesel (GE 7FDL12)' : 'Compressor de Ar (WABCO 3CDC)'}`;
-        if (badgeEl) badgeEl.innerText = `${mod} ${locoSelecionada}`;
-        
-        const selectForm = document.getElementById("cadLocoForm");
-        if (selectForm) selectForm.value = locoSelecionada;
-
-        const laudosM = todosLaudos.filter(l => pertenceALocomotiva(l.locomotiva, locoSelecionada) && pertenceAoComponente(l.componente || l.sistema, 'MOTOR_DIESEL'))
-            .sort((x, y) => parseDataSegura(y.dataColeta) - parseDataSegura(x.dataColeta));
-        
-        const txtM = document.getElementById("leadMotorDias");
-        if (txtM) {
-            if (laudosM.length > 0) {
-                const diasM = Math.max(0, Math.floor((Date.now() - parseDataSegura(laudosM[0].dataColeta)) / 86400000));
-                txtM.innerText = `Último laudo: Há ${diasM} dias`;
-            } else {
-                txtM.innerText = `Sem laudos registrados`;
-            }
-        }
-
-        const laudosC = todosLaudos.filter(l => pertenceALocomotiva(l.locomotiva, locoSelecionada) && pertenceAoComponente(l.componente || l.sistema, 'COMPRESSOR_AR'))
-            .sort((x, y) => parseDataSegura(y.dataColeta) - parseDataSegura(x.dataColeta));
-
-        const txtC = document.getElementById("leadCompDias");
-        if (txtC) {
-            if (laudosC.length > 0) {
-                const diasC = Math.max(0, Math.floor((Date.now() - parseDataSegura(laudosC[0].dataColeta)) / 86400000));
-                txtC.innerText = `Último laudo: Há ${diasC} dias`;
-            } else {
-                txtC.innerText = `Sem laudos registrados`;
-            }
-        }
-    };
-
-    window.abrirModalCompartilhamentoFluido = () => {
-        const pass = document.getElementById("modalSharePass");
-        if (pass) pass.value = "";
-        const overlay = document.getElementById("modalCompartilharOverlay");
-        if (overlay) overlay.classList.add("active");
-        setTimeout(() => { if (pass) pass.focus(); }, 150);
-    };
-
-    window.fecharModalCompartilhamentoFluido = () => {
-        const overlay = document.getElementById("modalCompartilharOverlay");
-        if (overlay) overlay.classList.remove("active");
-    };
-
-    window.executarCompartilhamentoProFluido = async () => {
-        const pass = document.getElementById("modalSharePass");
-        const horas = document.getElementById("modalShareTempo");
-        const passVal = pass ? pass.value : "";
-        const horasVal = horas ? horas.value : "24";
-
-        if (passVal !== SENHA) return alert("Autenticação inválida! Senha incorreta.");
-
-        const tokenId = Math.random().toString(36).substr(2, 9);
-        const tempoExpiracao = Date.now() + (parseInt(horasVal) * 3600000);
-
-        try {
-            await update(ref(db, `chaves/${tokenId}`), { expira: tempoExpiracao });
-            window.fecharModalCompartilhamentoFluido();
-
-            const dominioBase = (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-                ? "https://mathfrotage.web.app"
-                : window.location.origin;
-
-            const urlAcesso = `${dominioBase}/fluidos.html?token=${tokenId}`;
-            const msgTexto = `M.A.T.H. | FLUIDOS & INTEGRIDADE DE LUBRIFICANTES\nPainel técnico liberado para acompanhamento operacional.\nValidade: ${horasVal} Horas.\nLink: ${urlAcesso}`;
-
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'M.A.T.H. - Fluidos & Integridade',
-                        text: msgTexto,
-                        url: urlAcesso
-                    });
-                    return;
-                } catch (errShare) {}
-            }
-
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(urlAcesso);
-            }
-
-            const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(msgTexto)}`;
-            window.open(urlWhatsApp, '_blank');
-        } catch (err) {
-            alert("Erro ao emitir chave segura de compartilhamento: " + err.message);
-        }
-    };
-
-    window.abrirModalSenhaPDFFluido = () => {
-        const passEl = document.getElementById("modalPDFFluidoPass");
-        if (passEl) passEl.value = "";
-        const overlay = document.getElementById("modalPDFFluidoOverlay");
-        if (overlay) overlay.classList.add("active");
-        setTimeout(() => { if (passEl) passEl.focus(); }, 150);
-    };
-
-    window.fecharModalSenhaPDFFluido = () => {
-        const overlay = document.getElementById("modalPDFFluidoOverlay");
-        if (overlay) overlay.classList.remove("active");
-    };
-
-    window.confirmarEmissaoPDFFluido = () => {
-        const passEl = document.getElementById("modalPDFFluidoPass");
-        const senhaDigitada = passEl ? passEl.value : "";
-        if (senhaDigitada !== SENHA) {
-            return alert("Senha incorreta! Emissão cancelada.");
-        }
-        window.fecharModalSenhaPDFFluido();
-        exportarPDFFluidosCompleto();
-    };
-
-    const exportarPDFFluidosCompleto = () => {
-        if (!window.jspdf) return alert("Aguarde a biblioteca PDF carregar...");
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF('l', 'mm', 'a4');
-
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(13);
-        doc.text("HISTÓRICO TÉCNICO DE FLUIDOS & INTEGRIDADE - MATHEUS G COELHO", 14, 15);
-
-        doc.setFontSize(9.5);
-        doc.setFont("helvetica", "normal");
-        doc.text(`Emissão: ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')} | Base Operacional: Frota GE U20-C`, 14, 21);
-
-        const rows = [];
-        const ordenados = [...todosLaudos].sort((a, b) => parseDataSegura(b.dataColeta) - parseDataSegura(a.dataColeta));
-
-        ordenados.forEach(l => {
-            const loco = `${l.locomotiva || 'N/I'}`;
-            const comp = l.componente === 'MOTOR_DIESEL' ? 'Motor Diesel' : 'Compressor 3CDC';
-            const laudoNum = l.numeroLaudo || 'N/I';
-            const crit = l.criticidade || 'NORMAL';
-            const datas = `Coleta: ${formatarData(l.dataColeta)}\nLaudo: ${formatarData(l.dataLaudo || l.dataColeta)}`;
-            const diag = limparParaPDF(l.diagnostico || 'Sem diagnóstico');
-            const acao = limparParaPDF(l.acao || 'Sem recomendação');
-
-            const isConc = (normalizarTexto(l.statusIntervencao) === 'CONCLUIDO');
-            let interv = isConc ? `[LIBERADO]\nData: ${formatarData(l.dataConclusao)}` : `[PENDENTE]`;
-            if (l.atividadesCorretivas) {
-                interv += `\nAções: ${limparParaPDF(l.atividadesCorretivas)}`;
-            }
-
-            rows.push([loco, comp, laudoNum, crit, datas, diag, acao, interv]);
-        });
-
-        if (rows.length === 0) {
-            return alert("Nenhum laudo encontrado para gerar o relatório.");
-        }
-
-        doc.autoTable({
-            startY: 26,
-            head: [['LOCOMOTIVA', 'SUBSISTEMA', 'Nº LAUDO', 'CRITICIDADE', 'DATAS', 'DIAGNÓSTICO CONCLUSIVO', 'RECOMENDAÇÃO', 'LIBERAÇÃO / OFICINA']],
-            body: rows,
-            theme: 'striped',
-            headStyles: { fillColor: [13, 17, 26], textColor: [245, 158, 11], fontStyle: 'bold', fontSize: 8 },
-            styles: { fontSize: 7.5, cellPadding: 2.5, valign: 'top' },
-            columnStyles: {
-                0: { cellWidth: 22 },
-                1: { cellWidth: 26 },
-                2: { cellWidth: 22 },
-                3: { cellWidth: 22 },
-                4: { cellWidth: 26 },
-                5: { cellWidth: 60 },
-                6: { cellWidth: 46 },
-                7: { cellWidth: 45 }
-            }
-        });
-
-        doc.save(`Relatorio_Fluidos_MATH_${new Date().toLocaleDateString('pt-BR').replace(/\//g, '-')}.pdf`);
-    };
-
-    window.alternarFocoPainelFluido = (painelAlvo) => {
-        const grid = document.getElementById("mainDetailSplitGrid");
-        const btnLaudos = document.getElementById("btnFocoLaudosFluido");
-        const btnGraficos = document.getElementById("btnFocoGraficosFluido");
-
-        if (modoFocoFluido === painelAlvo) {
-            grid.classList.remove("foco-laudos", "foco-graficos");
-            btnLaudos.innerText = "⤢";
-            btnGraficos.innerText = "⤢";
-            btnLaudos.title = "Ampliar";
-            btnGraficos.title = "Ampliar";
-            modoFocoFluido = "PADRAO";
-        } else {
-            if (painelAlvo === "LAUDOS") {
-                grid.classList.remove("foco-graficos");
-                grid.classList.add("foco-laudos");
-                btnLaudos.innerText = "⤡";
-                btnGraficos.innerText = "⤢";
-                btnLaudos.title = "Restaurar";
-                btnGraficos.title = "Ampliar";
-                modoFocoFluido = "LAUDOS";
-            } else if (painelAlvo === "GRAFICOS") {
-                grid.classList.remove("foco-laudos");
-                grid.classList.add("foco-graficos");
-                btnGraficos.innerText = "⤡";
-                btnLaudos.innerText = "⤢";
-                btnGraficos.title = "Restaurar";
-                btnLaudos.title = "Ampliar";
-                modoFocoFluido = "GRAFICOS";
-            }
-        }
-
-        setTimeout(() => {
-            if (barChartFluido) barChartFluido.resize();
-            if (pieChartFluido) pieChartFluido.resize();
-            if (temporalChartFluido) temporalChartFluido.resize();
-        }, 320);
-    };
-
-    window.toggleMinimizarFluido = (elementId, btn) => {
-        const bodyEl = document.getElementById(elementId);
-        if (!bodyEl) return;
-        
-        const isMin = bodyEl.classList.toggle("minimized");
-        btn.innerText = isMin ? "⤢" : "—";
-        btn.title = isMin ? "Expandir" : "Minimizar";
-
-        if (!isMin) {
-            setTimeout(() => {
-                if (barChartFluido) barChartFluido.resize();
-                if (pieChartFluido) pieChartFluido.resize();
-                if (temporalChartFluido) temporalChartFluido.resize();
-            }, 300);
-        }
-    };
-
-    window.navegarGraficoFluido = (direcao) => {
-        slideGraficoFluidoAtual += direcao;
-        if (slideGraficoFluidoAtual > 3) slideGraficoFluidoAtual = 1;
-        if (slideGraficoFluidoAtual < 1) slideGraficoFluidoAtual = 3;
-
-        document.getElementById("slideGraficoFluido1").classList.toggle("active", slideGraficoFluidoAtual === 1);
-        document.getElementById("slideGraficoFluido2").classList.toggle("active", slideGraficoFluidoAtual === 2);
-        document.getElementById("slideGraficoFluido3").classList.toggle("active", slideGraficoFluidoAtual === 3);
-
-        const lblTitle = document.getElementById("labelNomeGraficoAtivoFluido");
-        const filtrosTemp = document.getElementById("filtrosInlineTemporalFluido");
-        document.getElementById("indicadorSlideGraficoFluido").innerText = `${slideGraficoFluidoAtual} / 3`;
-
-        filtrosTemp.style.display = (slideGraficoFluidoAtual === 3) ? "flex" : "none";
-
-        if (slideGraficoFluidoAtual === 1) {
-            lblTitle.innerText = "VOLUME DE LAUDOS POR LOCOMOTIVA (ORDEM DECRESCENTE)";
-            if (barChartFluido) barChartFluido.resize();
-        } else if (slideGraficoFluidoAtual === 2) {
-            lblTitle.innerText = "DISTRIBUIÇÃO DE LAUDOS POR SUBSISTEMA (PIZZA)";
-            if (pieChartFluido) pieChartFluido.resize();
-        } else if (slideGraficoFluidoAtual === 3) {
-            lblTitle.innerText = "EVOLUÇÃO TEMPORAL DE LAUDOS DE FLUIDOS (MÊS / ANO)";
-            window.atualizarGraficoTemporalFluido();
-        }
-    };
-
-    window.alternarTema = () => {
-        document.body.classList.toggle("light-theme");
-        const eLight = document.body.classList.contains("light-theme");
-        localStorage.setItem("visao_theme", eLight ? "light" : "dark");
-        atualizarCardContabilizacao();
-
-        const corTexto = eLight ? "#0f172a" : "#f8fafc";
-        const corGrid = eLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.03)";
-
-        if (barChartFluido) {
-            barChartFluido.options.scales.x.ticks.color = corTexto;
-            barChartFluido.options.scales.y.ticks.color = corTexto;
-            barChartFluido.options.scales.x.grid.color = corGrid;
-            barChartFluido.options.scales.y.grid.color = corGrid;
-            barChartFluido.options.plugins.legend.labels.color = corTexto;
-            barChartFluido.update();
-        }
-
-        if (pieChartFluido) {
-            pieChartFluido.options.plugins.legend.labels.color = corTexto;
-            pieChartFluido.update();
-        }
-
-        if (temporalChartFluido) {
-            window.atualizarGraficoTemporalFluido();
-        }
-    };
-
-    window.ampliarImagem = (src) => {
-        document.getElementById("lightboxImg").src = src;
-        document.getElementById("appLightbox").style.display = "flex";
-    };
-
-    const atualizarCardContabilizacao = () => {
-        let countCrit = 0;
-        let countWarn = 0;
-        let countNorm = 0;
-
-        todosLaudos.forEach(l => {
-            const crit = normalizarTexto(l.criticidade);
-            const interv = normalizarTexto(l.statusIntervencao);
-
-            if (interv === "CONCLUIDO") {
-                countNorm++;
-            } else if (crit.includes("CRITICA")) {
-                countCrit++;
-            } else if (crit.includes("ATENCAO")) {
-                countWarn++;
-            } else {
-                countNorm++;
-            }
-        });
-
-        const totalEl = document.getElementById("kpiLabelTotalGeral");
-        const critEl = document.getElementById("kpiCountCriticos");
-        const warnEl = document.getElementById("kpiCountAlertas");
-        const normEl = document.getElementById("kpiCountNormais");
-        const footerAtivosEl = document.getElementById("kpiFooterTotalAtivos");
-        const totalFrotaEl = document.getElementById("labelTotalFrotaTop");
-
-        if (totalEl) totalEl.innerText = `${todosLaudos.length} LAUDOS`;
-        if (critEl) critEl.innerText = countCrit;
-        if (warnEl) warnEl.innerText = countWarn;
-        if (normEl) normEl.innerText = countNorm;
-        if (footerAtivosEl) footerAtivosEl.innerText = `${listaAtivosUnicos.length} ATIVOS MONITORADOS`;
-        if (totalFrotaEl) totalFrotaEl.innerText = `${listaAtivosUnicos.length} ATIVOS EM MONITORAMENTO`;
-    };
-
-    window.renderizarTimelineLoco = () => {
-        const lista = document.getElementById("listaLaudosTimeline");
-        if (!lista) return;
-
-        const filtroOrdEl = document.getElementById("filtroOrdenacao");
-        const filtroOrd = filtroOrdEl ? filtroOrdEl.value : "RECENTES";
-
-        const filtrados = todosLaudos.filter(l => pertenceALocomotiva(l.locomotiva, locoSelecionada) && pertenceAoComponente(l.componente || l.sistema, sistemaAtivo));
-
-        if (filtroOrd === "ANTIGOS") {
-            filtrados.sort((a, b) => parseDataSegura(a.dataColeta) - parseDataSegura(b.dataColeta));
-        } else {
-            filtrados.sort((a, b) => parseDataSegura(b.dataColeta) - parseDataSegura(a.dataColeta));
-        }
-
-        const nomeSubsistema = sistemaAtivo === "MOTOR_DIESEL" ? "MOTOR DIESEL (GE 7FDL12)" : "COMPRESSOR DE AR (WABCO 3CDC)";
-        const titleHist = document.getElementById("titleHistorico");
-        if (titleHist) titleHist.innerText = `ANÁLISES: ${nomeSubsistema}`;
-
-        if (filtrados.length === 0) {
-            lista.innerHTML = `
-                <div style="text-align:center; padding:50px 20px; color:var(--text-muted); font-family:'JetBrains Mono'; font-size:12px;">
-                    Nenhuma análise técnica registrada para o subsistema da locomotiva <strong>${locoSelecionada}</strong>.<br>
-                    <span style="font-size:10px; opacity:0.8;">Utilize o formulário abaixo para registrar o primeiro laudo.</span>
-                </div>`;
-            return;
-        }
-
-        let htmlAcumulado = "";
-        filtrados.forEach(l => {
-            let galeriaHtml = "";
-            if (l.fotos && Array.isArray(l.fotos) && l.fotos.length > 0) {
-                galeriaHtml = `<div style="display:flex; gap:6px; margin:8px 0; flex-wrap:wrap;">`;
-                l.fotos.forEach((src, idx) => {
-                    galeriaHtml += `<button type="button" class="btn-evidencia-badge" onclick="window.ampliarImagem('${src}')">EVIDÊNCIA ${idx + 1}</button>`;
-                });
-                galeriaHtml += `</div>`;
-            }
-
-            const estaConcluido = (normalizarTexto(l.statusIntervencao) === "CONCLUIDO");
-
-            let blocoLiberacaoHtml = "";
-            if (estaConcluido || l.dataConclusao || l.atividadesCorretivas) {
-                blocoLiberacaoHtml = `
-                    <div class="box-liberacao-tecnica">
-                        <div class="box-liberacao-header">
-                            <span>LIBERAÇÃO TÉCNICA / ATIVIDADES DA OFICINA</span>
-                        </div>
-                        <div class="box-liberacao-item">
-                            <b>DATA LIBERAÇÃO:</b> ${formatarData(l.dataConclusao)}
-                        </div>
-                        <div class="box-liberacao-item">
-                            <b>AÇÕES EXECUTADAS:</b> ${l.atividadesCorretivas || 'Manutenção executada conforme plano de ação da oficina.'}
-                        </div>
-                    </div>`;
-            }
-
-            htmlAcumulado += `
-                <div class="lab-record-card">
-                    <div class="lab-record-header">
-                        <strong style="color:var(--text-main); font-size:13px;">Laudo: ${l.numeroLaudo || 'N/I'}</strong>
-                        <div style="display:flex; gap:6px; align-items:center;">
-                            ${estaConcluido ? `<span style="font-family:'JetBrains Mono'; font-size:9px; background:rgba(16,185,129,0.2); color:var(--accent-green); padding:3px 6px; border-radius:3px; font-weight:800;">LIBERADO</span>` : ''}
-                            <span class="badge-status badge-${l.criticidade}">${l.criticidade}</span>
-                        </div>
-                    </div>
-
-                    <div class="lab-text-body"><strong>Diagnóstico:</strong> ${l.diagnostico || 'Sem observações textuais cadastradas.'}</div>
-                    ${l.acao ? `<div class="lab-action-text"> <strong>Recomendação:</strong> ${l.acao}</div>` : ''}
-
-                    ${galeriaHtml}
-                    ${blocoLiberacaoHtml}
-
-                    <div class="lab-footer-dates">
-                        <div class="datas-duplas-container">
-                            <span><strong>Coleta:</strong> ${formatarData(l.dataColeta)}</span>
-                            <span><strong>Laudo:</strong> ${formatarData(l.dataLaudo || l.dataColeta)}</span>
-                        </div>
-                        ${!tokenAcesso ? `
-                            <div style="display:flex; gap:6px;">
-                                <button class="btn-acao-inline" onclick='window.prepararEdicaoLaudo(${JSON.stringify(l)})' title="Editar Laudo e Intervenção">EDITAR</button>
-                                <button class="btn-acao-inline" onclick="window.deletarLaudo('${l.id}')" style="color:var(--accent-red);" title="Excluir Registro">APAGAR</button>
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>`;
-        });
-        lista.innerHTML = htmlAcumulado;
-    };
-
-    const inicializarGraficosFluidos = () => {
-        if (!window.Chart) return;
-        const eLight = document.body.classList.contains("light-theme");
-        const corTexto = eLight ? "#0f172a" : "#f8fafc";
-        const corGrid = eLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.03)";
-
-        const ctxBarEl = document.getElementById('chartLocosFluidoBar');
-        if (ctxBarEl) {
-            const ctxBar = ctxBarEl.getContext('2d');
-            const gradPendente = ctxBar.createLinearGradient(0, 0, 0, 380);
-            gradPendente.addColorStop(0, 'rgba(245, 158, 11, 0.90)');
-            gradPendente.addColorStop(1, 'rgba(217, 119, 6, 0.40)');
-
-            const gradConcluido = ctxBar.createLinearGradient(0, 0, 0, 380);
-            gradConcluido.addColorStop(0, 'rgba(16, 185, 129, 0.90)');
-            gradConcluido.addColorStop(1, 'rgba(5, 150, 105, 0.40)');
-
-            if (barChartFluido) barChartFluido.destroy();
-            barChartFluido = new Chart(ctxBar, {
-                type: 'bar',
-                data: {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: 'Pendentes ',
-                            data: [],
-                            backgroundColor: gradPendente,
-                            borderColor: '#f59e0b',
-                            borderWidth: 1.5,
-                            borderRadius: 4,
-                            stack: 'statusStack'
-                        },
-                        {
-                            label: 'Liberados ',
-                            data: [],
-                            backgroundColor: gradConcluido,
-                            borderColor: '#10b981',
-                            borderWidth: 1.5,
-                            borderRadius: 4,
-                            stack: 'statusStack'
-                        }
+                <div class="modal-form-group">
+                    <label>MODELO / DESCRIÇÃO</label>
+                    <input type="text" id="novoAtivoModelo" placeholder="Ex: Escavadeira Hidráulica 320D" required>
+                </div>
+                <div class="modal-btn-row">
+                    <button type="button" class="btn-modal-cancel" onclick="window.fecharModais()">CANCELAR</button>
+                    <button type="submit" class="btn-modal-confirm">SALVAR ATIVO</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL COMPARTILHAR -->
+    <div class="modal-overlay" id="modalCompartilhar">
+        <div class="modal-card-pro">
+            <div class="modal-title-pro">COMPARTILHAR PAINEL</div>
+            <div class="modal-desc-pro">Copie o resumo técnico do ativo selecionado para envio rápido.</div>
+            <textarea id="textoCompartilhamento" rows="5" readonly></textarea>
+            <div class="modal-btn-row">
+                <button type="button" class="btn-modal-cancel" onclick="window.fecharModais()">FECHAR</button>
+                <button type="button" class="btn-modal-confirm" onclick="window.copiarResumo()">COPIAR RESUMO</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = "math_fluidos_hub_v1";
+        let state = {
+            ativoId: "ESC-01",
+            sistema: "hidraulico",
+            drawerFilter: "ALL",
+            slideGrafico: 0,
+            ativos: [
+                { id: "ESC-01", modelo: "Escavadeira Hidráulica 336", frota: "Frota Pesada" },
+                { id: "TR-09", modelo: "Trator de Esteiras D6T", frota: "Terraplenagem" }
+            ],
+            laudos: {
+                "ESC-01": {
+                    hidraulico: [
+                        { id: 1, data: "2026-10-15", status: "ATENÇÃO", visc: 42.1, iso: "19/17/14", resumo: "Leve elevação de partículas ferrosas e viscosidade abaixo da nominal.", acao: "Inspecionar filtro de respiro e recoletar em 250h." },
+                        { id: 2, data: "2026-11-10", status: "NORMAL", visc: 45.8, iso: "17/15/12", resumo: "Viscosidade estabilizada após troca de elementos filtrantes.", acao: "Manter plano preventivo padrão." }
+                    ],
+                    motor: [
+                        { id: 3, data: "2026-11-05", status: "NORMAL", visc: 15.2, iso: "16/14/11", resumo: "Sem presença de combustível ou água; aditivação dentro da faixa.", acao: "Próxima coleta na troca de óleo." }
+                    ],
+                    transmissao: [
+                        { id: 4, data: "2026-11-02", status: "CRÍTICA", visc: 88.0, iso: "21/19/16", resumo: "Desgaste acelerado de cobre/bronze detectado em amostra de rotina.", acao: "Parada programada para verificação de discos e rolamentos." }
                     ]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                color: corTexto,
-                                font: { family: 'JetBrains Mono', size: 10, weight: 'bold' },
-                                boxWidth: 12,
-                                padding: 12
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            stacked: true,
-                            grid: { color: corGrid },
-                            ticks: { color: corTexto, font: { family: 'JetBrains Mono', size: 10, weight: 'bold' } }
-                        },
-                        y: {
-                            stacked: true,
-                            grid: { color: corGrid },
-                            ticks: { color: corTexto, font: { family: 'JetBrains Mono', size: 10, weight: 'bold' }, stepSize: 1 },
-                            beginAtZero: true
-                        }
-                    }
+                "TR-09": {
+                    hidraulico: [
+                        { id: 5, data: "2026-11-12", status: "NORMAL", visc: 46.0, iso: "17/14/12", resumo: "Parâmetros dentro da especificação.", acao: "Sem ação corretiva." }
+                    ],
+                    motor: [],
+                    transmissao: []
                 }
-            });
+            }
+        };
+
+        let chartVisc = null;
+        let chartStatus = null;
+
+        function carregarEstado() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) state = JSON.parse(raw);
+            } catch (_) {}
+            const dataInput = document.getElementById("laudoData");
+            if (dataInput && !dataInput.value) {
+                dataInput.value = new Date().toISOString().split("T")[0];
+            }
         }
 
-        const ctxPieEl = document.getElementById('chartSistemasFluidoPie');
-        if (ctxPieEl) {
-            const ctxPie = ctxPieEl.getContext('2d');
-            if (pieChartFluido) pieChartFluido.destroy();
-            pieChartFluido = new Chart(ctxPie, {
-                type: 'pie',
+        function salvarEstado() {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {}
+        }
+
+        window.executarLogin = function() {
+            document.getElementById("telaLogin").style.display = "none";
+            document.getElementById("painelPrincipal").style.display = "block";
+            renderizarTudo();
+        };
+
+        window.executarLogout = function() {
+            document.getElementById("painelPrincipal").style.display = "none";
+            document.getElementById("telaLogin").style.display = "flex";
+        };
+
+        window.alternarTema = function() {
+            document.body.classList.toggle("light-theme");
+            renderizarGraficos();
+        };
+
+        window.toggleDrawer = function(abrir) {
+            document.getElementById("drawerOverlay").classList.toggle("active", abrir);
+            document.getElementById("drawerContainer").classList.toggle("active", abrir);
+            if (abrir) renderDrawerList();
+        };
+
+        window.setDrawerFilter = function(filtro, btn) {
+            state.drawerFilter = filtro;
+            document.querySelectorAll(".drawer-chip-btn").forEach(b => b.classList.remove("active"));
+            if (btn) btn.classList.add("active");
+            renderDrawerList();
+        };
+
+        function getUltimoLaudo(ativoId, sistema) {
+            const lista = ((state.laudos[ativoId] || {})[sistema] || []);
+            return lista.length ? lista[lista.length - 1] : null;
+        }
+
+        window.renderDrawerList = function() {
+            const busca = (document.getElementById("drawerSearch").value || "").toLowerCase();
+            const container = document.getElementById("drawerAssetList");
+            const filtrados = state.ativos.filter(a => {
+                const matchTexto = a.id.toLowerCase().includes(busca) || a.modelo.toLowerCase().includes(busca);
+                if (!matchTexto) return false;
+                if (state.drawerFilter === "ALL") return true;
+                const ultimo = getUltimoLaudo(a.id, state.sistema);
+                return ultimo && ultimo.status === state.drawerFilter;
+            });
+
+            container.innerHTML = filtrados.map(a => {
+                const ultimo = getUltimoLaudo(a.id, state.sistema);
+                const st = ultimo ? ultimo.status : "NORMAL";
+                const activeClass = a.id === state.ativoId ? "selected" : "";
+                return `
+                    <div class="drawer-item ${activeClass}" onclick="window.selecionarAtivo('${a.id}')">
+                        <div>
+                            <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:12px;">${a.id}</div>
+                            <div style="font-size:11px;color:var(--text-muted);">${a.modelo}</div>
+                        </div>
+                        <span class="badge-status badge-${st}">${st}</span>
+                    </div>
+                `;
+            }).join("") || `<div style="font-size:12px;color:var(--text-muted);">Nenhum ativo encontrado.</div>`;
+        };
+
+        window.selecionarAtivo = function(id) {
+            state.ativoId = id;
+            salvarEstado();
+            window.toggleDrawer(false);
+            renderizarTudo();
+        };
+
+        window.selecionarSistema = function(sis, btn) {
+            state.sistema = sis;
+            document.querySelectorAll(".sys-tab-btn").forEach(b => b.classList.remove("active"));
+            if (btn) btn.classList.add("active");
+            salvarEstado();
+            renderizarTudo();
+        };
+
+        window.salvarLaudo = function(e) {
+            e.preventDefault();
+            if (!state.laudos[state.ativoId]) state.laudos[state.ativoId] = { hidraulico: [], motor: [], transmissao: [] };
+            if (!state.laudos[state.ativoId][state.sistema]) state.laudos[state.ativoId][state.sistema] = [];
+
+            state.laudos[state.ativoId][state.sistema].push({
+                id: Date.now(),
+                data: document.getElementById("laudoData").value,
+                status: document.getElementById("laudoStatus").value,
+                visc: parseFloat(document.getElementById("laudoVisc").value) || 0,
+                iso: document.getElementById("laudoIso").value || "--",
+                resumo: document.getElementById("laudoResumo").value.trim(),
+                acao: document.getElementById("laudoAcao").value.trim() || "Acompanhamento de rotina."
+            });
+
+            document.getElementById("laudoResumo").value = "";
+            document.getElementById("laudoAcao").value = "";
+            salvarEstado();
+            renderizarTudo();
+        };
+
+        window.excluirLaudo = function(id) {
+            const lista = ((state.laudos[state.ativoId] || {})[state.sistema] || []);
+            state.laudos[state.ativoId][state.sistema] = lista.filter(item => item.id !== id);
+            salvarEstado();
+            renderizarTudo();
+        };
+
+        window.toggleCollapse = function(id, btn) {
+            const el = document.getElementById(id);
+            el.classList.toggle("minimized");
+            btn.textContent = el.classList.contains("minimized") ? "+" : "—";
+        };
+
+        window.mudarSlideGrafico = function(delta) {
+            state.slideGrafico = (state.slideGrafico + delta + 2) % 2;
+            document.getElementById("slideGrafico0").classList.toggle("active", state.slideGrafico === 0);
+            document.getElementById("slideGrafico1").classList.toggle("active", state.slideGrafico === 1);
+            document.getElementById("chartSlideTitle").textContent = state.slideGrafico === 0
+                ? "TENDÊNCIA DE VISCOSIDADE (cSt)"
+                : "HISTÓRICO DE VISCOSIDADE VS AMOSTRAS";
+            document.getElementById("chartSlideIndicator").textContent = `${state.slideGrafico + 1} / 2`;
+        };
+
+        window.alternarFoco = function(modo) {
+            const grid = document.getElementById("detailSplitGrid");
+            grid.classList.remove("foco-laudos", "foco-graficos");
+            if (modo === "laudos") grid.classList.add("foco-laudos");
+            if (modo === "graficos") grid.classList.add("foco-graficos");
+        };
+
+        window.abrirModalNovoAtivo = function() {
+            document.getElementById("modalNovoAtivo").classList.add("active");
+        };
+
+        window.salvarNovoAtivo = function(e) {
+            e.preventDefault();
+            const tag = document.getElementById("novoAtivoTag").value.trim().toUpperCase();
+            const modelo = document.getElementById("novoAtivoModelo").value.trim();
+            if (!tag || !modelo) return;
+            if (!state.ativos.some(a => a.id === tag)) {
+                state.ativos.push({ id: tag, modelo, frota: "Operacional" });
+            }
+            state.ativoId = tag;
+            document.getElementById("formNovoAtivo").reset();
+            window.fecharModais();
+            salvarEstado();
+            renderizarTudo();
+        };
+
+        window.abrirModalCompartilhamento = function() {
+            const ativo = state.ativos.find(a => a.id === state.ativoId) || { id: state.ativoId, modelo: "" };
+            const ultimo = getUltimoLaudo(state.ativoId, state.sistema);
+            document.getElementById("textoCompartilhamento").value =
+                `M.A.T.H. FLUIDOS | Ativo: ${ativo.id} (${ativo.modelo})\nSistema: ${state.sistema.toUpperCase()}\nCondição: ${ultimo ? ultimo.status : "SEM LAUDO"}\nViscosidade: ${ultimo && ultimo.visc ? ultimo.visc + " cSt" : "--"} | ISO: ${ultimo ? ultimo.iso : "--"}\nParecer: ${ultimo ? ultimo.resumo : "Sem registros"}`;
+            document.getElementById("modalCompartilhar").classList.add("active");
+        };
+
+        window.copiarResumo = function() {
+            const txt = document.getElementById("textoCompartilhamento");
+            txt.select();
+            navigator.clipboard?.writeText(txt.value).catch(() => {});
+        };
+
+        window.fecharModais = function() {
+            document.querySelectorAll(".modal-overlay").forEach(m => m.classList.remove("active"));
+        };
+
+        window.exportarPDF = function() {
+            if (!window.jspdf) return;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const ativo = state.ativos.find(a => a.id === state.ativoId) || { id: state.ativoId, modelo: "" };
+            const lista = ((state.laudos[state.ativoId] || {})[state.sistema] || []);
+            doc.text(`M.A.T.H. - Relatorio de Fluidos: ${ativo.id} (${ativo.modelo})`, 14, 16);
+            doc.autoTable({
+                startY: 24,
+                head: [["Data", "Status", "Visc (cSt)", "ISO", "Parecer", "Acao"]],
+                body: lista.map(l => [l.data, l.status, l.visc || "--", l.iso || "--", l.resumo, l.acao])
+            });
+            doc.save(`fluidos_${ativo.id}_${state.sistema}.pdf`);
+        };
+
+        function renderizarPanorama() {
+            let crit = 0, warn = 0, ok = 0, totalLaudos = 0;
+            Object.values(state.laudos).forEach(sisMap => {
+                Object.values(sisMap || {}).forEach(arr => {
+                    (arr || []).forEach(l => {
+                        totalLaudos++;
+                        if (l.status === "CRÍTICA") crit++;
+                        else if (l.status === "ATENÇÃO") warn++;
+                        else ok++;
+                    });
+                });
+            });
+            document.getElementById("kpiCriticos").textContent = crit;
+            document.getElementById("kpiAtencao").textContent = warn;
+            document.getElementById("kpiNormais").textContent = ok;
+            document.getElementById("kpiLabelTotalGeral").textContent = `${totalLaudos} LAUDOS`;
+            document.getElementById("kpiTotalAtivos").textContent = `${state.ativos.length} ATIVOS`;
+        }
+
+        function renderizarAtivoELaudos() {
+            const ativo = state.ativos.find(a => a.id === state.ativoId) || state.ativos[0];
+            if (ativo) state.ativoId = ativo.id;
+            const lista = ((state.laudos[state.ativoId] || {})[state.sistema] || []);
+            const ultimo = lista.length ? lista[lista.length - 1] : null;
+
+            document.getElementById("activeAssetTitle").textContent = ativo ? `${ativo.id} • ${ativo.modelo}` : "SEM ATIVO";
+            document.getElementById("activeAssetMeta").textContent = `SISTEMA: ${state.sistema.toUpperCase()} • ÚLTIMA COLETA: ${ultimo ? ultimo.data : "N/A"}`;
+            document.getElementById("kpiViscosidade").textContent = ultimo && ultimo.visc ? `${ultimo.visc} cSt` : "--";
+            document.getElementById("kpiTanTbn").textContent = ultimo ? ultimo.status : "--";
+            document.getElementById("kpiIso").textContent = ultimo ? ultimo.iso : "--";
+
+            const feed = document.getElementById("listaLaudos");
+            if (!lista.length) {
+                feed.innerHTML = `<div style="font-size:12px;color:var(--text-muted);">Nenhum laudo registrado neste sistema.</div>`;
+                return;
+            }
+
+            feed.innerHTML = [...lista].reverse().map(item => `
+                <div class="lab-record-card">
+                    <div class="lab-record-header">
+                        <span class="badge-status badge-${item.status}">${item.status}</span>
+                        <button type="button" class="btn-acao-inline" onclick="window.excluirLaudo(${item.id})">EXCLUIR</button>
+                    </div>
+                    <div class="lab-text-body">${item.resumo}</div>
+                    <div class="lab-action-text">Ação: ${item.acao}</div>
+                    <div class="lab-footer-dates">
+                        <span>Data: ${item.data}</span>
+                        <span>Visc: ${item.visc || "--"} cSt • ISO: ${item.iso || "--"}</span>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function renderizarGraficos() {
+            const lista = ((state.laudos[state.ativoId] || {})[state.sistema] || []);
+            const labels = lista.map(l => l.data);
+            const valores = lista.map(l => l.visc || 0);
+            const isLight = document.body.classList.contains("light-theme");
+            const corTexto = isLight ? "#0f172a" : "#f8fafc";
+
+            const ctx1 = document.getElementById("canvasViscosidade").getContext("2d");
+            if (chartVisc) chartVisc.destroy();
+            chartVisc = new Chart(ctx1, {
+                type: "line",
                 data: {
-                    labels: ['Motor Diesel (GE 7FDL12)', 'Compressor de Ar (WABCO 3CDC)'],
+                    labels,
                     datasets: [{
-                        data: [0, 0],
-                        backgroundColor: ['#f59e0b', '#0284c7'],
-                        borderColor: eLight ? '#ffffff' : '#0d111a',
-                        borderWidth: 2
+                        label: "Viscosidade (cSt)",
+                        data: valores,
+                        borderColor: "#f59e0b",
+                        backgroundColor: "rgba(245, 158, 11, 0.15)",
+                        tension: 0.3,
+                        fill: true
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                color: corTexto,
-                                font: { family: 'JetBrains Mono', size: 10, weight: 'bold' },
-                                padding: 12
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const dataset = context.chart.data.datasets[0];
-                                    const total = dataset.data.reduce((acc, curr) => acc + curr, 0);
-                                    const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                    return ` ${label}: ${value} laudo(s) (${percent}%)`;
-                                }
-                            }
-                        }
+                    plugins: { legend: { labels: { color: corTexto } } },
+                    scales: {
+                        x: { ticks: { color: corTexto } },
+                        y: { ticks: { color: corTexto } }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById("canvasStatusHist").getContext("2d");
+            if (chartStatus) chartStatus.destroy();
+            chartStatus = new Chart(ctx2, {
+                type: "bar",
+                data: {
+                    labels,
+                    datasets: [{
+                        label: "Viscosidade por Amostra",
+                        data: valores,
+                        backgroundColor: "#0284c7"
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: corTexto } } },
+                    scales: {
+                        x: { ticks: { color: corTexto } },
+                        y: { ticks: { color: corTexto } }
                     }
                 }
             });
         }
-    };
 
-    const sincronizarDadosGraficosFluidos = () => {
-        let contagemPendente = {};
-        let contagemConcluido = {};
-        listaAtivosUnicos.forEach(a => {
-            contagemPendente[a.prefixo] = 0;
-            contagemConcluido[a.prefixo] = 0;
-        });
-
-        let contagemMotor = 0;
-        let contagemComp = 0;
-
-        todosLaudos.forEach(l => {
-            const pref = String(l.locomotiva || '').replace(/\D/g, '');
-            const isConc = (normalizarTexto(l.statusIntervencao) === 'CONCLUIDO');
-
-            if (contagemPendente[pref] !== undefined) {
-                if (isConc) contagemConcluido[pref]++;
-                else contagemPendente[pref]++;
-            }
-
-            if (pertenceAoComponente(l.componente || l.sistema, 'MOTOR_DIESEL')) {
-                contagemMotor++;
-            } else if (pertenceAoComponente(l.componente || l.sistema, 'COMPRESSOR_AR')) {
-                contagemComp++;
-            }
-        });
-
-        const paresOrdenados = Object.keys(contagemPendente)
-            .map(pref => {
-                const pend = contagemPendente[pref] || 0;
-                const conc = contagemConcluido[pref] || 0;
-                return {
-                    prefixo: pref,
-                    pendente: pend,
-                    concluido: conc,
-                    total: pend + conc
-                };
-            })
-            .sort((a, b) => b.total - a.total);
-
-        if (barChartFluido) {
-            barChartFluido.data.labels = paresOrdenados.map(i => i.prefixo);
-            barChartFluido.data.datasets[0].data = paresOrdenados.map(i => i.pendente);
-            barChartFluido.data.datasets[1].data = paresOrdenados.map(i => i.concluido);
-            barChartFluido.update();
+        function renderizarTudo() {
+            renderizarPanorama();
+            renderizarAtivoELaudos();
+            renderizarGraficos();
         }
 
-        if (pieChartFluido) {
-            pieChartFluido.data.datasets[0].data = [contagemMotor, contagemComp];
-            pieChartFluido.update();
-        }
-
-        inicializarAnosTemporalFluido();
-        window.atualizarGraficoTemporalFluido();
-    };
-
-    const inicializarAnosTemporalFluido = () => {
-        const selAno = document.getElementById("selAnoTemporalFluido");
-        if (!selAno) return;
-
-        const anosSet = new Set();
-        const anoAtual = new Date().getFullYear().toString();
-        anosSet.add(anoAtual);
-
-        todosLaudos.forEach(l => {
-            const raw = l.dataColeta || l.dataLaudo;
-            if (!raw) return;
-            const t = parseDataSegura(raw);
-            if (t > 0) {
-                const d = new Date(t);
-                if (!isNaN(d.getTime())) anosSet.add(String(d.getFullYear()));
-            }
-        });
-
-        const anosOrdenados = Array.from(anosSet).sort((a,b) => Number(b) - Number(a));
-        const valorAnt = selAno.value;
-        selAno.innerHTML = "";
-        anosOrdenados.forEach(a => selAno.innerHTML += `<option value="${a}">${a}</option>`);
-        if (anosSet.has(valorAnt)) selAno.value = valorAnt;
-        else selAno.value = anosOrdenados[0];
-    };
-
-    window.atualizarGraficoTemporalFluido = () => {
-        if (!window.Chart) return;
-        const selAnoEl = document.getElementById("selAnoTemporalFluido");
-        const selLocoEl = document.getElementById("selLocoTemporalFluido");
-        if (!selAnoEl || !selLocoEl) return;
-
-        const selAno = selAnoEl.value;
-        const selLoco = selLocoEl.value;
-        const eLight = document.body.classList.contains("light-theme");
-        const corTexto = eLight ? "#0f172a" : "#f8fafc";
-        const corGrid = eLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.03)";
-
-        const contagemMeses = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-        todosLaudos.forEach(l => {
-            const raw = l.dataColeta || l.dataLaudo;
-            if (!raw) return;
-            const t = parseDataSegura(raw);
-            if (t === 0) return;
-            const d = new Date(t);
-            if (isNaN(d.getTime())) return;
-
-            const anoL = String(d.getFullYear());
-            const mesIdx = d.getMonth();
-            const locoLimpa = String(l.locomotiva || '').replace(/\D/g, '');
-
-            const atendeAno = (anoL === selAno);
-            const atendeLoco = (selLoco === "TODAS" || locoLimpa === selLoco);
-
-            if (atendeAno && atendeLoco && mesIdx >= 0 && mesIdx < 12) {
-                contagemMeses[mesIdx]++;
-            }
-        });
-
-        const canvasEl = document.getElementById("chartTemporalFluidoBar");
-        if (!canvasEl) return;
-        const ctxTemporal = canvasEl.getContext("2d");
-        if (temporalChartFluido) temporalChartFluido.destroy();
-
-        const gradTemporal = ctxTemporal.createLinearGradient(0, 0, 0, 390);
-        gradTemporal.addColorStop(0, '#0284c7');
-        gradTemporal.addColorStop(1, 'rgba(2, 132, 199, 0.15)');
-
-        temporalChartFluido = new Chart(ctxTemporal, {
-            type: 'bar',
-            data: {
-                labels: mesesNomesAbrev,
-                datasets: [{
-                    label: `Laudos de Fluidos (${selAno})`,
-                    data: contagemMeses,
-                    backgroundColor: gradTemporal,
-                    borderColor: '#0284c7',
-                    borderWidth: 1,
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: {
-                        grid: { color: corGrid },
-                        ticks: { color: corTexto, font: { family: 'JetBrains Mono', size: 10 } }
-                    },
-                    y: {
-                        grid: { color: corGrid },
-                        ticks: { color: corTexto, font: { family: 'JetBrains Mono', size: 10 }, stepSize: 1 },
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    };
-
-    window.processarFotoFluido = (input) => {
-        if (input.files && input.files[0]) {
-            if (fotosTemp.length >= 3) return alert("Limite de 3 fotos atingido!");
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    const MAX_WIDTH = 1000;
-                    let width = img.width, height = img.height;
-                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
-                    canvas.width = width; canvas.height = height;
-                    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
-                    ctx.drawImage(img, 0, 0, width, height);
-                    fotosTemp.push(canvas.toDataURL('image/jpeg', 0.85));
-                    renderizarBufferFotos();
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    };
-
-    const renderizarBufferFotos = () => {
-        const box = document.getElementById("previewUploadFluido");
-        if (!box) return;
-        box.innerHTML = "";
-        fotosTemp.forEach((src, idx) => {
-            box.innerHTML += `
-                <div style="position:relative; width:50px; height:50px;">
-                    <img src="${src}" style="width:100%; height:100%; object-fit:cover; border-radius:4px;">
-                    <button type="button" onclick="window.removerFotoBuffer(${idx})" style="position:absolute; top:-4px; right:-4px; background:var(--accent-red); color:#fff; border:none; font-size:8px; border-radius:50%; width:14px; height:14px; cursor:pointer;">X</button>
-                </div>`;
-        });
-    };
-
-    window.removerFotoBuffer = (idx) => {
-        fotosTemp.splice(idx, 1);
-        renderizarBufferFotos();
-    };
-
-    /* LIMPAR CAMPOS DE DIGITAÇÃO DO FORMULÁRIO */
-    window.limparFormularioCampos = () => {
-        const inputNumLaudo = document.getElementById("cadNumLaudoForm");
-        const inputDataColeta = document.getElementById("cadDataColetaForm");
-        const inputDataLaudo = document.getElementById("cadDataLaudoForm");
-        const inputDiag = document.getElementById("cadDiagForm");
-        const inputAcao = document.getElementById("cadAcaoForm");
-        const inputDataConc = document.getElementById("cadDataConcForm");
-        const inputAtivCorr = document.getElementById("cadAtivCorrForm");
-        const inputFoto = document.getElementById("photoInputFluido");
-        const selCrit = document.getElementById("cadCritForm");
-        const selStatus = document.getElementById("cadStatusIntervForm");
-
-        if (inputNumLaudo) inputNumLaudo.value = "";
-        if (inputDataColeta) inputDataColeta.value = "";
-        if (inputDataLaudo) inputDataLaudo.value = "";
-        if (inputDiag) inputDiag.value = "";
-        if (inputAcao) inputAcao.value = "";
-        if (inputDataConc) inputDataConc.value = "";
-        if (inputAtivCorr) inputAtivCorr.value = "";
-        if (inputFoto) inputFoto.value = "";
-        if (selCrit) selCrit.value = "NORMAL";
-        if (selStatus) selStatus.value = "PENDENTE";
-
-        fotosTemp = [];
-        renderizarBufferFotos();
-    };
-
-    window.prepararEdicaoLaudo = (laudo) => {
-        document.getElementById("editLaudoId").value = laudo.id;
-        document.getElementById("cadLocoForm").value = String(laudo.locomotiva).replace(/\D/g, '') || laudo.locomotiva;
-        document.getElementById("cadCompForm").value = laudo.componente;
-        document.getElementById("cadCritForm").value = laudo.criticidade;
-        document.getElementById("cadDataColetaForm").value = formatarData(laudo.dataColeta);
-        document.getElementById("cadDataLaudoForm").value = formatarData(laudo.dataLaudo || laudo.dataColeta);
-        document.getElementById("cadNumLaudoForm").value = laudo.numeroLaudo || "";
-        document.getElementById("cadDiagForm").value = laudo.diagnostico || "";
-        document.getElementById("cadAcaoForm").value = laudo.acao || "";
-
-        document.getElementById("cadStatusIntervForm").value = laudo.statusIntervencao || "PENDENTE";
-        document.getElementById("cadDataConcForm").value = formatarData(laudo.dataConclusao);
-        document.getElementById("cadAtivCorrForm").value = laudo.atividadesCorretivas || "";
-        
-        fotosTemp = Array.isArray(laudo.fotos) ? [...laudo.fotos] : [];
-        renderizarBufferFotos();
-
-        const formBody = document.getElementById("bodyAdminCadastroForm");
-        if (formBody && formBody.classList.contains("minimized")) {
-            formBody.classList.remove("minimized");
-        }
-
-        document.getElementById("formTitle").innerText = `EDITANDO: LOCO ${laudo.locomotiva}`;
-        document.getElementById("btnSalvarAnalise").innerText = "SALVAR ALTERAÇÕES COMPLETAS";
-        document.getElementById("btnCancelarEdicao").style.display = "block";
-
-        document.getElementById("painelAdminCadastro").scrollIntoView({ behavior: 'smooth' });
-    };
-
-    window.cancelarEdicao = () => {
-        document.getElementById("editLaudoId").value = "";
-        document.getElementById("cadNumLaudoForm").value = "";
-        document.getElementById("cadDiagForm").value = "";
-        document.getElementById("cadAcaoForm").value = "";
-        document.getElementById("cadStatusIntervForm").value = "PENDENTE";
-        document.getElementById("cadDataConcForm").value = "";
-        document.getElementById("cadAtivCorrForm").value = "";
-        fotosTemp = [];
-        renderizarBufferFotos();
-
-        const hojeBR = obterDataAtualBR();
-        const inputDataColeta = document.getElementById('cadDataColetaForm');
-        const inputDataLaudo = document.getElementById('cadDataLaudoForm');
-        if (inputDataColeta) inputDataColeta.value = hojeBR;
-        if (inputDataLaudo) inputDataLaudo.value = hojeBR;
-
-        document.getElementById("formTitle").innerText = "REGISTRAR NOVA ANÁLISE";
-        document.getElementById("btnSalvarAnalise").innerText = "GRAVAR ANÁLISE NO BANCO";
-        document.getElementById("btnCancelarEdicao").style.display = "none";
-    };
-
-    window.salvarNovaAnalise = () => {
-        if (document.getElementById("adminPassFluido").value !== SENHA) return alert("Autenticação inválida!");
-        const dataColetaBR = document.getElementById("cadDataColetaForm").value;
-        const dataLaudoBR = document.getElementById("cadDataLaudoForm").value || dataColetaBR;
-        if (!dataColetaBR) return alert("Preencha a data da coleta.");
-
-        const idEdicao = document.getElementById("editLaudoId").value;
-        const locoAlvo = String(document.getElementById("cadLocoForm").value).replace(/\D/g, '');
-
-        const payload = {
-            locomotiva: locoAlvo,
-            componente: String(document.getElementById("cadCompForm").value),
-            criticidade: String(document.getElementById("cadCritForm").value),
-            numeroLaudo: String(document.getElementById("cadNumLaudoForm").value || "N/I").trim(),
-            dataColeta: converterParaDataArmazenamento(dataColetaBR),
-            dataLaudo: converterParaDataArmazenamento(dataLaudoBR),
-            diagnostico: String(document.getElementById("cadDiagForm").value || "").trim(),
-            acao: String(document.getElementById("cadAcaoForm").value || "").trim(),
-            fotos: Array.isArray(fotosTemp) ? fotosTemp : [],
-            statusIntervencao: document.getElementById("cadStatusIntervForm").value,
-            dataConclusao: converterParaDataArmazenamento(document.getElementById("cadDataConcForm").value),
-            atividadesCorretivas: document.getElementById("cadAtivCorrForm").value.trim()
-        };
-
-        if (idEdicao) {
-            update(ref(db, `laudos_laboratoriais/${idEdicao}`), payload)
-                .then(() => {
-                    alert("Registro e intervenção atualizados com sucesso!");
-                    window.cancelarEdicao();
-                    document.getElementById("adminPassFluido").value = "";
-                })
-                .catch(err => alert("Erro ao atualizar: " + err.message));
-        } else {
-            push(ref(db, 'laudos_laboratoriais'), payload)
-                .then(() => {
-                    alert("Nova análise registrada com sucesso!");
-                    window.cancelarEdicao();
-                    document.getElementById("adminPassFluido").value = "";
-                })
-                .catch(err => alert("Erro ao salvar: " + err.message));
-        }
-    };
-
-    window.deletarLaudo = (id) => {
-        if (prompt("Senha do Inspetor:") === SENHA) {
-            remove(ref(db, `laudos_laboratoriais/${id}`))
-                .then(() => alert("Registro excluído com sucesso."))
-                .catch(err => alert("Erro ao excluir: " + err.message));
-        }
-    };
-
-    function sincronizarSelectAtivos() {
-        const select = document.getElementById("cadLocoForm");
-        const selectTemporal = document.getElementById("selLocoTemporalFluido");
-
-        if (select) {
-            select.innerHTML = "";
-            listaAtivosUnicos.forEach(a => {
-                select.innerHTML += `<option value="${a.prefixo}">${a.modelo || 'GE-U20-C'} ${a.prefixo}</option>`;
-            });
-            select.value = locoSelecionada;
-        }
-
-        if (selectTemporal) {
-            selectTemporal.innerHTML = `<option value="TODAS">FROTA COMPLETA</option>`;
-            listaAtivosUnicos.forEach(a => {
-                selectTemporal.innerHTML += `<option value="${a.prefixo}">${a.prefixo}</option>`;
-            });
-        }
-    }
-
-    function inicializarAplicacao() {
-        document.getElementById("telaLogin").style.display = "none";
-        document.getElementById("painelPrincipal").style.display = "block";
-
-        if (localStorage.getItem("visao_theme") === "light") {
-            document.body.classList.add("light-theme");
-        }
-
-        const hojeBR = obterDataAtualBR();
-        const inputDataColeta = document.getElementById('cadDataColetaForm');
-        const inputDataLaudo = document.getElementById('cadDataLaudoForm');
-        const inputDataConc = document.getElementById('cadDataConcForm');
-
-        if (inputDataColeta) {
-            inputDataColeta.value = hojeBR;
-            aplicarMascaraDataBR(inputDataColeta);
-        }
-        if (inputDataLaudo) {
-            inputDataLaudo.value = hojeBR;
-            aplicarMascaraDataBR(inputDataLaudo);
-        }
-        if (inputDataConc) {
-            aplicarMascaraDataBR(inputDataConc);
-        }
-
-        setTimeout(() => {
-            inicializarGraficosFluidos();
-        }, 60);
-
-        onValue(ref(db, 'ativos'), (snap) => {
-            listaAtivos = [];
-            if (snap.exists()) {
-                snap.forEach(child => {
-                    listaAtivos.push({ id: child.key, ...child.val() });
-                });
-            } else {
-                const frotaPadrao = [
-                    { modelo: "GE-U20-C", prefixo: "2613" }, { modelo: "GE-U20-C", prefixo: "2625" },
-                    { modelo: "GE-U20-C", prefixo: "2629" }, { modelo: "GE-U20-C", prefixo: "2670" },
-                    { modelo: "GE-U20-C", prefixo: "2640" }, { modelo: "GE-U20-C", prefixo: "3863" },
-                    { modelo: "GE-U20-C", prefixo: "7804" }
-                ];
-                frotaPadrao.forEach(a => push(ref(db, 'ativos'), a));
-                return;
-            }
-
-            consolidarAtivosSemDuplicatas();
-
-            if (!listaAtivosUnicos.some(a => a.prefixo === locoSelecionada) && listaAtivosUnicos.length > 0) {
-                locoSelecionada = listaAtivosUnicos[0].prefixo;
-            }
-
-            sincronizarSelectAtivos();
-            atualizarBannerAtivo();
-            atualizarCardContabilizacao();
-            sincronizarDadosGraficosFluidos();
-            window.filtrarGavetaAtivos();
-        });
-
-        onValue(ref(db, 'laudos_laboratoriais'), (snap) => {
-            todosLaudos = [];
-            if (snap.exists()) {
-                snap.forEach(child => {
-                    todosLaudos.push({ id: child.key, ...child.val() });
-                });
-            }
-            window.renderizarTimelineLoco();
-            atualizarBannerAtivo();
-            atualizarCardContabilizacao();
-            sincronizarDadosGraficosFluidos();
-            window.filtrarGavetaAtivos();
-        });
-    }
-
-    async function start() {
-        if (tokenAcesso) {
-            try {
-                const snap = await get(ref(db, `chaves/${tokenAcesso}`));
-                if (!snap.exists() || snap.val().expira < Date.now()) { 
-                    document.body.innerHTML = "<h2 style='color:var(--text-main); font-family:JetBrains Mono; text-align:center; padding-top:100px;'>ACESSO EXPIRADO</h2>"; 
-                    return; 
-                }
-                inicializarAplicacao();
-                const painelCadastro = document.getElementById("painelAdminCadastro");
-                if (painelCadastro) painelCadastro.style.display = "none";
-                const btnShare = document.getElementById("btnCompartilhar");
-                if (btnShare) btnShare.style.display = "none";
-                const btnLogout = document.getElementById("btnLogout");
-                if (btnLogout) btnLogout.style.display = "none";
-            } catch (err) {
-                console.error("Falha ao validar token:", err);
-            }
-        } else {
-            const sessaoAtiva = localStorage.getItem("fluidos_session");
-            if (sessaoAtiva === "matheus") {
-                inicializarAplicacao();
-            } else {
-                document.getElementById("telaLogin").style.display = "flex";
-                document.getElementById("painelPrincipal").style.display = "none";
-            }
-        }
-    }
-
-    start();
-</script>
+        carregarEstado();
+    </script>
 </body>
 </html>
