@@ -182,7 +182,24 @@
 
         .container { max-width: 1600px; margin: 20px auto; padding: 0 24px; width: 100%; }
 
-        /* CARD DE PATROCINADORES (CARROSSEL 5S) */
+        .status-toast {
+            display: none;
+            margin-bottom: 16px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid var(--accent-gold);
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--accent-gold);
+        }
+        .status-toast.error {
+            border-color: var(--accent-red);
+            background: rgba(244, 63, 94, 0.14);
+            color: var(--accent-red);
+        }
+
         .sponsor-card-box {
             background: var(--card-gradient);
             border: 1px solid var(--card-border);
@@ -226,12 +243,7 @@
             align-items: center;
             justify-content: center;
         }
-        .sponsor-slide-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+        .sponsor-slide-img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sponsor-slide-caption {
             position: absolute;
             inset: auto 0 0 0;
@@ -246,13 +258,7 @@
             align-items: center;
             gap: 8px;
         }
-        .sponsor-dots {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-        }
+        .sponsor-dots { display: flex; gap: 6px; align-items: center; justify-content: center; margin-top: 10px; }
         .sponsor-dot {
             width: 18px;
             height: 5px;
@@ -263,10 +269,7 @@
             padding: 0;
             transition: all 0.2s;
         }
-        .sponsor-dot.active {
-            width: 30px;
-            background: var(--accent-gold);
-        }
+        .sponsor-dot.active { width: 30px; background: var(--accent-gold); }
         .sponsor-manage-item {
             display: flex;
             align-items: center;
@@ -860,6 +863,8 @@
 
         <div class="container page-container">
 
+            <div id="statusToast" class="status-toast"></div>
+
             <!-- 0. CARD DE APRESENTAÇÃO / PATROCINADORES (CARROSSEL 5S EDITÁVEL) -->
             <section class="sponsor-card-box" id="cardPatrocinadores"
                 onmouseenter="window.pausarCarrosselPatrocinadores(true)"
@@ -1037,7 +1042,10 @@
             <!-- 4. BARRA INFERIOR -->
             <div class="bottom-action-bar">
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <button type="button" class="btn-action secondary" onclick="window.exportarPDF()">EXPORTAR RELATÓRIO PDF</button>
+                    <button type="button" class="btn-action secondary" onclick="window.exportarPDF()">EXPORTAR PDF</button>
+                    <button type="button" class="btn-action secondary" onclick="window.exportarBackupJSON()">BACKUP JSON</button>
+                    <button type="button" class="btn-action secondary" onclick="document.getElementById('inputImportarJson').click()">RESTAURAR JSON</button>
+                    <input type="file" id="inputImportarJson" accept=".json,application/json" style="display:none;" onchange="window.importarBackupJSON(event)">
                     <button type="button" class="btn-action secondary" onclick="window.alternarFoco('laudos')">FOCO LAUDOS</button>
                     <button type="button" class="btn-action secondary" onclick="window.alternarFoco('graficos')">FOCO GRÁFICOS</button>
                     <button type="button" class="btn-action secondary" onclick="window.alternarFoco('split')">TELA DIVIDIDA</button>
@@ -1138,6 +1146,7 @@
 
     <script>
         const STORAGE_KEY = "math_fluidos_hub_v1";
+        const SISTEMAS = ["hidraulico", "motor", "transmissao"];
 
         const DEFAULT_STATE = {
             ativoId: "ESC-01",
@@ -1186,20 +1195,62 @@
         let sponsorPaused = false;
         let uploadedSponsorDataUrl = "";
 
+        function notificar(msg, isError = false) {
+            const el = document.getElementById("statusToast");
+            if (!el) return;
+            el.textContent = msg;
+            el.classList.toggle("error", Boolean(isError));
+            el.style.display = "block";
+            clearTimeout(el._t);
+            el._t = setTimeout(() => { el.style.display = "none"; }, 4500);
+        }
+
+        function normalizarEstado(rawObj) {
+            const base = JSON.parse(JSON.stringify(DEFAULT_STATE));
+            const src = rawObj && typeof rawObj === "object" ? rawObj : {};
+
+            const ativos = Array.isArray(src.ativos) && src.ativos.length ? src.ativos : base.ativos;
+            const laudosSrc = src.laudos && typeof src.laudos === "object" ? src.laudos : {};
+            const laudosNorm = {};
+
+            // Preserva todos os laudos existentes, mesmo de ativos não listados explicitamente
+            const todasChavesAtivos = new Set([
+                ...ativos.map(a => a.id),
+                ...Object.keys(laudosSrc)
+            ]);
+
+            todasChavesAtivos.forEach(tag => {
+                const entry = laudosSrc[tag] && typeof laudosSrc[tag] === "object" ? laudosSrc[tag] : {};
+                laudosNorm[tag] = {
+                    hidraulico: Array.isArray(entry.hidraulico) ? [...entry.hidraulico] : [],
+                    motor: Array.isArray(entry.motor) ? [...entry.motor] : [],
+                    transmissao: Array.isArray(entry.transmissao) ? [...entry.transmissao] : []
+                };
+            });
+
+            return {
+                ...base,
+                ...src,
+                sistema: SISTEMAS.includes(src.sistema) ? src.sistema : "hidraulico",
+                ativos,
+                laudos: laudosNorm,
+                patrocinadores: Array.isArray(src.patrocinadores) ? src.patrocinadores : base.patrocinadores
+            };
+        }
+
         function carregarEstado() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
-                    const parsed = JSON.parse(raw);
-                    state = {
-                        ...DEFAULT_STATE,
-                        ...parsed,
-                        ativos: Array.isArray(parsed.ativos) && parsed.ativos.length ? parsed.ativos : DEFAULT_STATE.ativos,
-                        laudos: parsed.laudos && typeof parsed.laudos === "object" ? parsed.laudos : DEFAULT_STATE.laudos,
-                        patrocinadores: Array.isArray(parsed.patrocinadores) ? parsed.patrocinadores : DEFAULT_STATE.patrocinadores
-                    };
+                    state = normalizarEstado(JSON.parse(raw));
+                } else {
+                    state = normalizarEstado(DEFAULT_STATE);
                 }
-            } catch (_) {}
+            } catch (err) {
+                console.error("Erro ao ler localStorage:", err);
+                state = normalizarEstado(DEFAULT_STATE);
+                notificar("Aviso: não foi possível ler dados salvos anteriormente.", true);
+            }
 
             const dataInput = document.getElementById("laudoData");
             if (dataInput && !dataInput.value) {
@@ -1208,7 +1259,36 @@
         }
 
         function salvarEstado() {
-            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {}
+            state = normalizarEstado(state);
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                return true;
+            } catch (err) {
+                console.error("Erro ao salvar no localStorage:", err);
+                notificar("Erro ao salvar no navegador (limite de espaço ou modo restrito). Use BACKUP JSON para não perder dados.", true);
+                return false;
+            }
+        }
+
+        function comprimirImagemBase64(dataUrl, maxWidth = 1000, quality = 0.78) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = function() {
+                    let { width, height } = img;
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                    const canvas = document.createElement("canvas");
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL("image/jpeg", quality));
+                };
+                img.onerror = function() { resolve(dataUrl); };
+                img.src = dataUrl;
+            });
         }
 
         // CARROSSEL DE PATROCINADORES (5S)
@@ -1300,8 +1380,8 @@
             const file = event.target.files && event.target.files[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = function(e) {
-                uploadedSponsorDataUrl = e.target.result || "";
+            reader.onload = async function(e) {
+                uploadedSponsorDataUrl = await comprimirImagemBase64(e.target.result || "");
             };
             reader.readAsDataURL(file);
         };
@@ -1386,8 +1466,18 @@
             renderDrawerList();
         };
 
+        function getListaLaudos(ativoId, sistema) {
+            if (!state.laudos[ativoId]) {
+                state.laudos[ativoId] = { hidraulico: [], motor: [], transmissao: [] };
+            }
+            if (!Array.isArray(state.laudos[ativoId][sistema])) {
+                state.laudos[ativoId][sistema] = [];
+            }
+            return state.laudos[ativoId][sistema];
+        }
+
         function getUltimoLaudo(ativoId, sistema) {
-            const lista = ((state.laudos[ativoId] || {})[sistema] || []);
+            const lista = getListaLaudos(ativoId, sistema);
             return lista.length ? lista[lista.length - 1] : null;
         }
 
@@ -1435,10 +1525,8 @@
 
         window.salvarLaudo = function(e) {
             e.preventDefault();
-            if (!state.laudos[state.ativoId]) state.laudos[state.ativoId] = { hidraulico: [], motor: [], transmissao: [] };
-            if (!state.laudos[state.ativoId][state.sistema]) state.laudos[state.ativoId][state.sistema] = [];
-
-            state.laudos[state.ativoId][state.sistema].push({
+            const lista = getListaLaudos(state.ativoId, state.sistema);
+            lista.push({
                 id: Date.now(),
                 data: document.getElementById("laudoData").value,
                 status: document.getElementById("laudoStatus").value,
@@ -1451,12 +1539,14 @@
 
             document.getElementById("laudoResumo").value = "";
             document.getElementById("laudoAcao").value = "";
-            salvarEstado();
+            if (salvarEstado()) {
+                notificar("Laudo salvo no histórico.");
+            }
             renderizarTudo();
         };
 
         window.excluirLaudo = function(id) {
-            const lista = ((state.laudos[state.ativoId] || {})[state.sistema] || []);
+            const lista = getListaLaudos(state.ativoId, state.sistema);
             state.laudos[state.ativoId][state.sistema] = lista.filter(item => item.id !== id);
             salvarEstado();
             renderizarTudo();
@@ -1497,9 +1587,7 @@
             if (!state.ativos.some(a => a.id === tag)) {
                 state.ativos.push({ id: tag, modelo, frota: "Operacional" });
             }
-            if (!state.laudos[tag]) {
-                state.laudos[tag] = { hidraulico: [], motor: [], transmissao: [] };
-            }
+            getListaLaudos(tag, "hidraulico");
             state.ativoId = tag;
             document.getElementById("formNovoAtivo").reset();
             window.fecharModais();
@@ -1525,12 +1613,43 @@
             document.querySelectorAll(".modal-overlay").forEach(m => m.classList.remove("active"));
         };
 
+        window.exportarBackupJSON = function() {
+            const payload = JSON.stringify(normalizarEstado(state), null, 2);
+            const blob = new Blob([payload], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `math_backup_${new Date().toISOString().slice(0, 10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            notificar("Backup JSON exportado com sucesso.");
+        };
+
+        window.importarBackupJSON = function(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    state = normalizarEstado(parsed);
+                    salvarEstado();
+                    renderizarTudo();
+                    notificar("Backup JSON restaurado com sucesso.");
+                } catch (_) {
+                    notificar("Arquivo JSON inválido.", true);
+                }
+                event.target.value = "";
+            };
+            reader.readAsText(file);
+        };
+
         window.exportarPDF = function() {
             if (!window.jspdf) return;
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const ativo = state.ativos.find(a => a.id === state.ativoId) || { id: state.ativoId, modelo: "" };
-            const lista = ((state.laudos[state.ativoId] || {})[state.sistema] || []);
+            const lista = getListaLaudos(state.ativoId, state.sistema);
             doc.text(`M.A.T.H. - Relatorio de Fluidos: ${ativo.id} (${ativo.modelo})`, 14, 16);
             doc.autoTable({
                 startY: 24,
@@ -1562,7 +1681,7 @@
         function renderizarAtivoELaudos() {
             const ativo = state.ativos.find(a => a.id === state.ativoId) || state.ativos[0];
             if (ativo) state.ativoId = ativo.id;
-            const lista = ((state.laudos[state.ativoId] || {})[state.sistema] || []);
+            const lista = getListaLaudos(state.ativoId, state.sistema);
             const ultimo = lista.length ? lista[lista.length - 1] : null;
 
             document.getElementById("activeAssetTitle").textContent = ativo ? `${ativo.id} • ${ativo.modelo}` : "SEM ATIVO";
@@ -1595,7 +1714,7 @@
         }
 
         function renderizarGraficos() {
-            const lista = ((state.laudos[state.ativoId] || {})[state.sistema] || []);
+            const lista = getListaLaudos(state.ativoId, state.sistema);
             const labels = lista.map(l => l.data);
             const valores = lista.map(l => l.visc || 0);
             const isLight = document.body.classList.contains("light-theme");
