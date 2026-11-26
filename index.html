@@ -67,7 +67,6 @@
             overflow-x: hidden;
         }
 
-        /* TELA DE LOGIN */
         .login-screen {
             display: flex;
             min-height: 100vh;
@@ -105,7 +104,6 @@
             letter-spacing: 1px;
         }
 
-        /* HEADER */
         .top-header {
             background: var(--card-gradient);
             border-bottom: 1px solid var(--card-border);
@@ -184,89 +182,42 @@
 
         .container { max-width: 1600px; margin: 20px auto; padding: 0 24px; width: 100%; }
 
-        /* CARD CARROSSEL DE PATROCINADORES NO TOPO */
-        .sponsor-card {
+        /* CARD DE PATROCINADORES (CARROSSEL 5S) */
+        .sponsor-card-box {
             background: var(--card-gradient);
             border: 1px solid var(--card-border);
             border-radius: 14px;
-            padding: 14px 18px;
+            padding: 16px 20px;
             margin-bottom: 20px;
             box-shadow: var(--shadow-card);
             transition: border-color 0.25s, box-shadow 0.25s;
         }
-        .sponsor-card:hover {
-            border-color: var(--card-border-hover);
-            box-shadow: var(--shadow-hover);
-        }
-        .sponsor-card-header {
+        .sponsor-card-box:hover { border-color: var(--card-border-hover); box-shadow: var(--shadow-hover); }
+        .sponsor-card-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--card-border);
             flex-wrap: wrap;
-        }
-        .sponsor-card-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
             font-family: 'JetBrains Mono', monospace;
+        }
+        .sponsor-card-label {
             font-size: 11px;
             font-weight: 800;
-            letter-spacing: 1.2px;
             text-transform: uppercase;
+            letter-spacing: 1.2px;
             color: var(--accent-gold);
-        }
-        .sponsor-pill-timer {
-            font-size: 9.5px;
-            padding: 2px 8px;
-            border-radius: 999px;
-            background: rgba(245, 158, 11, 0.14);
-            border: 1px solid rgba(245, 158, 11, 0.35);
-            color: var(--text-main);
-            font-weight: 700;
-        }
-        .sponsor-controls {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .btn-sponsor-mini {
-            background: var(--iron);
-            color: var(--text-main);
-            border: 1px solid var(--card-border);
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
-        .btn-sponsor-mini:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-        }
-        .btn-sponsor-mini.primary {
-            background: rgba(245, 158, 11, 0.16);
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-        }
-        .btn-sponsor-mini.danger:hover {
-            border-color: var(--accent-red);
-            color: var(--accent-red);
-        }
-
-        .sponsor-stage {
+        .sponsor-carousel-stage {
             position: relative;
             width: 100%;
-            height: 116px;
+            height: 150px;
             border-radius: 10px;
             overflow: hidden;
             background: var(--row-bg);
@@ -275,95 +226,69 @@
             align-items: center;
             justify-content: center;
         }
-        .sponsor-slide {
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 18px;
-            gap: 16px;
-        }
-        .sponsor-slide.active {
-            display: flex;
-            animation: sponsorFade 0.35s ease;
-        }
-        @keyframes sponsorFade {
-            from { opacity: 0.35; transform: scale(0.995); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .sponsor-slide img {
+        .sponsor-slide-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-        }
-        .sponsor-slide-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, rgba(7, 9, 14, 0.88) 0%, rgba(7, 9, 14, 0.55) 55%, rgba(7, 9, 14, 0.25) 100%);
-            z-index: 1;
-        }
-        .sponsor-slide-info {
-            position: relative;
-            z-index: 2;
-            max-width: 75%;
-        }
-        .sponsor-badge-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent-gold);
             display: block;
-            margin-bottom: 3px;
         }
-        .sponsor-name {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 15px;
-            font-weight: 800;
+        .sponsor-slide-caption {
+            position: absolute;
+            inset: auto 0 0 0;
+            padding: 10px 16px;
+            background: linear-gradient(to top, rgba(0,0,0,0.82), transparent);
             color: #ffffff;
-            margin: 0;
-        }
-        .sponsor-caption {
-            font-size: 11px;
-            color: #cbd5e1;
-            margin: 2px 0 0 0;
-        }
-        .sponsor-empty {
-            text-align: center;
-            padding: 16px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            color: var(--text-muted);
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
         }
         .sponsor-dots {
             display: flex;
-            justify-content: center;
-            align-items: center;
             gap: 6px;
+            align-items: center;
+            justify-content: center;
             margin-top: 10px;
         }
         .sponsor-dot {
-            width: 8px;
-            height: 8px;
+            width: 18px;
+            height: 5px;
             border-radius: 999px;
-            background: var(--card-border);
             border: none;
-            padding: 0;
+            background: var(--card-border);
             cursor: pointer;
+            padding: 0;
             transition: all 0.2s;
         }
         .sponsor-dot.active {
-            width: 22px;
+            width: 30px;
             background: var(--accent-gold);
         }
+        .sponsor-manage-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: var(--row-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+        }
+        .sponsor-thumb {
+            width: 54px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--card-border);
+            flex-shrink: 0;
+        }
 
-        /* FAIXA SUPERIOR */
         .top-status-grid {
             display: grid;
             grid-template-columns: 360px minmax(0, 1fr);
@@ -496,7 +421,6 @@
         }
         .btn-open-drawer:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45); }
 
-        /* ABAS */
         .system-tabs { display: flex; gap: 12px; margin-bottom: 20px; width: 100%; }
         .sys-tab-btn {
             flex: 1;
@@ -527,7 +451,6 @@
             box-shadow: 0 0 25px rgba(245, 158, 11, 0.2), var(--shadow-card);
         }
 
-        /* GRID PRINCIPAL */
         .detail-split-grid {
             display: grid;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -686,6 +609,23 @@
             border-left: 2px solid var(--accent-gold);
         }
 
+        .box-liberacao-tecnica {
+            background: rgba(21, 149, 112, 0.08);
+            border-left: 3px solid var(--accent-green);
+            border-radius: 0 6px 6px 0;
+            padding: 10px 14px;
+            margin-top: 10px;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .box-liberacao-header {
+            color: var(--accent-green);
+            font-weight: 800;
+            font-size: 11px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
         .lab-footer-dates {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
@@ -716,6 +656,11 @@
             transition: all 0.2s;
         }
         .btn-acao-inline:hover { border-color: var(--card-border-hover); }
+        .btn-acao-inline.danger {
+            color: var(--accent-red);
+            border-color: rgba(244, 63, 94, 0.35);
+            background: rgba(244, 63, 94, 0.08);
+        }
 
         .form-grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .full-width { grid-column: 1 / -1; }
@@ -737,6 +682,7 @@
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
             transition: border-color 0.2s;
         }
+        input[type="file"] { padding: 7px 10px; height: auto; }
         textarea { height: auto !important; }
         input:focus, select:focus, textarea:focus { border-color: var(--accent-gold); }
 
@@ -776,7 +722,6 @@
             gap: 12px;
         }
 
-        /* GAVETA LATERAL */
         .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; display: none; backdrop-filter: blur(4px); }
         .drawer-overlay.active { display: block; }
         .drawer-container {
@@ -835,7 +780,6 @@
         .drawer-item.selected { border: 2px solid var(--accent-gold); background: rgba(245, 158, 11, 0.08); }
         .drawer-footer { padding: 15px 22px; border-top: 1px solid var(--card-border); }
 
-        /* MODAIS */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -861,31 +805,11 @@
         }
         .modal-title-pro { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 800; color: var(--accent-gold); margin-bottom: 6px; letter-spacing: 1px; }
         .modal-desc-pro { font-size: 11px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.4; }
-        .modal-form-group { margin-bottom: 12px; text-align: left; }
+        .modal-form-group { margin-bottom: 14px; text-align: left; }
         .modal-form-group label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
         .modal-btn-row { display: flex; gap: 10px; margin-top: 18px; }
         .btn-modal-cancel { background: var(--iron); color: var(--text-main); border: 1px solid var(--card-border); padding: 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; cursor: pointer; flex: 1; }
         .btn-modal-confirm { background: var(--accent-gold); color: #000; border: none; padding: 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; cursor: pointer; flex: 2; }
-
-        .sponsor-manage-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            background: var(--row-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 8px 10px;
-            margin-bottom: 8px;
-        }
-        .sponsor-manage-thumb {
-            width: 56px;
-            height: 36px;
-            border-radius: 5px;
-            object-fit: cover;
-            border: 1px solid var(--card-border);
-            flex-shrink: 0;
-        }
 
         @media (max-width: 1180px) {
             .top-status-grid { grid-template-columns: 1fr; }
@@ -899,7 +823,6 @@
             .header-right { justify-content: center; margin-top: 4px; }
             .system-tabs { flex-direction: column; gap: 8px; }
             .form-grid-layout { grid-template-columns: 1fr; }
-            .sponsor-stage { height: 100px; }
         }
     </style>
 </head>
@@ -929,7 +852,7 @@
             </div>
 
             <div class="header-right">
-                <button type="button" class="btn-nav share" onclick="window.abrirModalCompartilhamento()">COMPARTILHAR</button>
+                <button type="button" class="btn-nav share" id="btnCompartilhar" onclick="window.abrirModalCompartilhamentoFluido()">COMPARTILHAR</button>
                 <button type="button" class="btn-nav" onclick="window.alternarTema()">TEMA</button>
                 <button type="button" id="btnLogout" onclick="window.executarLogout()" style="background: rgba(244,63,94,0.15); color: var(--accent-red); border: 1px solid var(--accent-red); padding: 7px 11px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 800; cursor: pointer;">[X] SAIR</button>
             </div>
@@ -937,30 +860,27 @@
 
         <div class="container page-container">
 
-            <!-- CARD DE APRESENTAÇÃO / PATROCINADORES (CARROSSEL 5s EDITÁVEL) -->
-            <section class="sponsor-card" id="sponsorCarouselCard"
-                onmouseenter="window.pausarCarrosselPatrocinador(true)"
-                onmouseleave="window.pausarCarrosselPatrocinador(false)">
-                <div class="sponsor-card-header">
-                    <div class="sponsor-card-title">
-                        <span>PATROCINADORES DA PLATAFORMA</span>
-                        <span class="sponsor-pill-timer" id="sponsorTimerBadge">AUTO 5S</span>
-                    </div>
-
-                    <div class="sponsor-controls">
-                        <button type="button" class="btn-sponsor-mini" onclick="window.mudarSlidePatrocinador(-1)" title="Anterior">◀</button>
-                        <span id="sponsorSlideCounter" style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:var(--text-muted);padding:0 4px;">0 / 0</span>
-                        <button type="button" class="btn-sponsor-mini" onclick="window.mudarSlidePatrocinador(1)" title="Próximo">▶</button>
-                        <button type="button" class="btn-sponsor-mini primary" onclick="window.abrirModalPatrocinadores()">+ EDITAR / IMAGENS</button>
-                        <button type="button" class="btn-sponsor-mini danger" onclick="window.excluirPatrocinadorAtual()" title="Excluir imagem atual">✕ EXCLUIR</button>
+            <!-- 0. CARD DE APRESENTAÇÃO / PATROCINADORES (CARROSSEL 5S EDITÁVEL) -->
+            <section class="sponsor-card-box" id="cardPatrocinadores"
+                onmouseenter="window.pausarCarrosselPatrocinadores(true)"
+                onmouseleave="window.pausarCarrosselPatrocinadores(false)">
+                <div class="sponsor-card-head">
+                    <span class="sponsor-card-label">PATROCINADORES & APOIO TÉCNICO • 5S</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <button type="button" class="btn-acao-inline" onclick="window.mudarSlidePatrocinador(-1)">◀</button>
+                        <span id="sponsorSlideCounter" style="font-size:10px; font-weight:800; color:var(--text-muted);">1 / 1</span>
+                        <button type="button" class="btn-acao-inline" onclick="window.mudarSlidePatrocinador(1)">▶</button>
+                        <button type="button" class="btn-acao-inline" style="border-color:var(--accent-gold); color:var(--accent-gold);" onclick="window.abrirModalPatrocinadores()">
+                            ✎ EDITAR IMAGENS
+                        </button>
                     </div>
                 </div>
 
-                <div class="sponsor-stage" id="sponsorStage"></div>
+                <div class="sponsor-carousel-stage" id="sponsorStage"></div>
                 <div class="sponsor-dots" id="sponsorDots"></div>
             </section>
 
-            <!-- 1. FAIXA SUPERIOR: CARD DE PANORAMA + BANNER DO ATIVO -->
+            <!-- 1. FAIXA SUPERIOR -->
             <div class="top-status-grid">
                 <div class="kpi-square-box">
                     <div class="kpi-square-head">
@@ -1055,6 +975,10 @@
                                     <input type="text" id="laudoIso" placeholder="Ex: 18/16/13">
                                 </div>
                                 <div class="field-group full-width">
+                                    <label>LIBERAÇÃO TÉCNICA / RESPONSÁVEL</label>
+                                    <input type="text" id="laudoLiberacao" placeholder="Ex: Liberado para operação contínua • Eng. Matheus">
+                                </div>
+                                <div class="field-group full-width">
                                     <label>PARECER / OBSERVAÇÕES DO LABORATÓRIO</label>
                                     <textarea id="laudoResumo" rows="2" placeholder="Descreva metais de desgaste, água, fuligem ou aditivação..." required></textarea>
                                 </div>
@@ -1120,39 +1044,34 @@
                 </div>
                 <button type="button" class="btn-action secondary" onclick="window.abrirModalNovoAtivo()">+ NOVO ATIVO</button>
             </div>
-
         </div>
     </div>
 
     <!-- MODAL EDITAR PATROCINADORES -->
     <div class="modal-overlay" id="modalPatrocinadores">
         <div class="modal-card-pro">
-            <div class="modal-title-pro">GERENCIAR PATROCINADORES</div>
-            <div class="modal-desc-pro">Adicione ou remova imagens do carrossel de 5 segundos no topo da plataforma.</div>
+            <div class="modal-title-pro">GERENCIAR PATROCINADORES (5S)</div>
+            <div class="modal-desc-pro">Adicione ou remova banners de patrocinadores sem alterar seu histórico de laudos ou ativos.</div>
 
-            <form id="formNovoPatrocinador" onsubmit="window.adicionarPatrocinador(event)">
+            <form onsubmit="window.adicionarPatrocinador(event)">
                 <div class="modal-form-group">
-                    <label>NOME DO PATROCINADOR</label>
-                    <input type="text" id="patrocinadorNome" placeholder="Ex: Lubrificantes Delta" required>
+                    <label>NOME / TÍTULO DO PATROCINADOR</label>
+                    <input type="text" id="patrocinadorNome" placeholder="Ex: Parceiro Lubrificantes Industriais">
                 </div>
                 <div class="modal-form-group">
-                    <label>DESCRIÇÃO CURTA (OPCIONAL)</label>
-                    <input type="text" id="patrocinadorSub" placeholder="Ex: Especialistas em análise tribológica">
-                </div>
-                <div class="modal-form-group">
-                    <label>ARQUIVO DE IMAGEM (UPLOAD)</label>
-                    <input type="file" id="patrocinadorArquivo" accept="image/*" style="padding:6px;">
-                </div>
-                <div class="modal-form-group">
-                    <label>OU URL DA IMAGEM</label>
+                    <label>URL DA IMAGEM (OU ENVIE ARQUIVO ABAIXO)</label>
                     <input type="url" id="patrocinadorUrl" placeholder="https://...">
+                </div>
+                <div class="modal-form-group">
+                    <label>ARQUIVO DE IMAGEM LOCAL</label>
+                    <input type="file" id="patrocinadorArquivo" accept="image/*" onchange="window.lerArquivoPatrocinador(event)">
                 </div>
                 <button type="submit" class="btn-action">+ ADICIONAR AO CARROSSEL</button>
             </form>
 
-            <div style="margin-top: 18px; border-top: 1px solid var(--card-border); padding-top: 12px;">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:var(--text-muted);margin-bottom:8px;">IMAGENS ATIVAS</div>
-                <div id="listaPatrocinadoresGerenciar"></div>
+            <div style="margin-top:16px;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:800; color:var(--text-muted); margin-bottom:8px;">IMAGENS ATIVAS NO CARROSSEL</div>
+                <div id="listaPatrocinadoresModal"></div>
             </div>
 
             <div class="modal-btn-row">
@@ -1209,7 +1128,7 @@
         <div class="modal-card-pro">
             <div class="modal-title-pro">COMPARTILHAR PAINEL</div>
             <div class="modal-desc-pro">Copie o resumo técnico do ativo selecionado para envio rápido.</div>
-            <textarea id="textoCompartilhamento" rows="5" readonly></textarea>
+            <textarea id="textoCompartilhamento" rows="6" readonly></textarea>
             <div class="modal-btn-row">
                 <button type="button" class="btn-modal-cancel" onclick="window.fecharModais()">FECHAR</button>
                 <button type="button" class="btn-modal-confirm" onclick="window.copiarResumo()">COPIAR RESUMO</button>
@@ -1219,26 +1138,17 @@
 
     <script>
         const STORAGE_KEY = "math_fluidos_hub_v1";
-        const SPONSOR_INTERVAL_MS = 5000;
 
-        let state = {
+        const DEFAULT_STATE = {
             ativoId: "ESC-01",
             sistema: "hidraulico",
             drawerFilter: "ALL",
             slideGrafico: 0,
-            sponsorIndex: 0,
             patrocinadores: [
                 {
-                    id: "sp-1",
-                    nome: "Tribologia & Fluidos Pro",
-                    sub: "Parceiro Oficial de Análise Laboratorial",
-                    imagem: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=60"
-                },
-                {
-                    id: "sp-2",
-                    nome: "Filtragem Industrial MX",
-                    sub: "Soluções de Controle de Contaminação ISO",
-                    imagem: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1200&q=60"
+                    id: "pat-default-1",
+                    titulo: "M.A.T.H. Engenharia & Tribologia",
+                    imagem: "https://placehold.co/1200x260/0d111a/f59e0b?text=PATROCINADORES+%7C+M.A.T.H.+FLUIDOS+%26+INTEGRIDADE"
                 }
             ],
             ativos: [
@@ -1248,19 +1158,19 @@
             laudos: {
                 "ESC-01": {
                     hidraulico: [
-                        { id: 1, data: "2026-10-15", status: "ATENÇÃO", visc: 42.1, iso: "19/17/14", resumo: "Leve elevação de partículas ferrosas e viscosidade abaixo da nominal.", acao: "Inspecionar filtro de respiro e recoletar em 250h." },
-                        { id: 2, data: "2026-11-10", status: "NORMAL", visc: 45.8, iso: "17/15/12", resumo: "Viscosidade estabilizada após troca de elementos filtrantes.", acao: "Manter plano preventivo padrão." }
+                        { id: 1, data: "2026-10-15", status: "ATENÇÃO", visc: 42.1, iso: "19/17/14", liberacao: "Acompanhamento de campo • Lab. Fluidos", resumo: "Leve elevação de partículas ferrosas e viscosidade abaixo da nominal.", acao: "Inspecionar filtro de respiro e recoletar em 250h." },
+                        { id: 2, data: "2026-11-10", status: "NORMAL", visc: 45.8, iso: "17/15/12", liberacao: "Liberado para operação • Eng. Matheus", resumo: "Viscosidade estabilizada após troca de elementos filtrantes.", acao: "Manter plano preventivo padrão." }
                     ],
                     motor: [
-                        { id: 3, data: "2026-11-05", status: "NORMAL", visc: 15.2, iso: "16/14/11", resumo: "Sem presença de combustível ou água; aditivação dentro da faixa.", acao: "Próxima coleta na troca de óleo." }
+                        { id: 3, data: "2026-11-05", status: "NORMAL", visc: 15.2, iso: "16/14/11", liberacao: "Liberado • Eng. Matheus", resumo: "Sem presença de combustível ou água; aditivação dentro da faixa.", acao: "Próxima coleta na troca de óleo." }
                     ],
                     transmissao: [
-                        { id: 4, data: "2026-11-02", status: "CRÍTICA", visc: 88.0, iso: "21/19/16", resumo: "Desgaste acelerado de cobre/bronze detectado em amostra de rotina.", acao: "Parada programada para verificação de discos e rolamentos." }
+                        { id: 4, data: "2026-11-02", status: "CRÍTICA", visc: 88.0, iso: "21/19/16", liberacao: "Restrição operacional imediata", resumo: "Desgaste acelerado de cobre/bronze detectado em amostra de rotina.", acao: "Parada programada para verificação de discos e rolamentos." }
                     ]
                 },
                 "TR-09": {
                     hidraulico: [
-                        { id: 5, data: "2026-11-12", status: "NORMAL", visc: 46.0, iso: "17/14/12", resumo: "Parâmetros dentro da especificação.", acao: "Sem ação corretiva." }
+                        { id: 5, data: "2026-11-12", status: "NORMAL", visc: 46.0, iso: "17/14/12", liberacao: "Liberado • Eng. Matheus", resumo: "Parâmetros dentro da especificação.", acao: "Sem ação corretiva." }
                     ],
                     motor: [],
                     transmissao: []
@@ -1268,20 +1178,29 @@
             }
         };
 
+        let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
         let chartVisc = null;
         let chartStatus = null;
+        let sponsorIndex = 0;
         let sponsorTimer = null;
         let sponsorPaused = false;
+        let uploadedSponsorDataUrl = "";
 
         function carregarEstado() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const parsed = JSON.parse(raw);
-                    state = { ...state, ...parsed };
-                    if (!Array.isArray(state.patrocinadores)) state.patrocinadores = [];
+                    state = {
+                        ...DEFAULT_STATE,
+                        ...parsed,
+                        ativos: Array.isArray(parsed.ativos) && parsed.ativos.length ? parsed.ativos : DEFAULT_STATE.ativos,
+                        laudos: parsed.laudos && typeof parsed.laudos === "object" ? parsed.laudos : DEFAULT_STATE.laudos,
+                        patrocinadores: Array.isArray(parsed.patrocinadores) ? parsed.patrocinadores : DEFAULT_STATE.patrocinadores
+                    };
                 }
             } catch (_) {}
+
             const dataInput = document.getElementById("laudoData");
             if (dataInput && !dataInput.value) {
                 dataInput.value = new Date().toISOString().split("T")[0];
@@ -1292,160 +1211,156 @@
             try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {}
         }
 
-        function iniciarCarrosselPatrocinadores() {
-            if (sponsorTimer) clearInterval(sponsorTimer);
+        // CARROSSEL DE PATROCINADORES (5S)
+        function iniciarTimerPatrocinadores() {
+            if (sponsorTimer) {
+                clearInterval(sponsorTimer);
+                sponsorTimer = null;
+            }
+            if (!Array.isArray(state.patrocinadores) || state.patrocinadores.length <= 1) return;
+
             sponsorTimer = setInterval(() => {
-                if (sponsorPaused || state.patrocinadores.length <= 1) return;
-                state.sponsorIndex = (state.sponsorIndex + 1) % state.patrocinadores.length;
-                renderizarPatrocinadores();
-            }, SPONSOR_INTERVAL_MS);
+                if (sponsorPaused) return;
+                sponsorIndex = (sponsorIndex + 1) % state.patrocinadores.length;
+                renderizarCarrosselPatrocinadores(false);
+            }, 5000);
         }
 
-        window.pausarCarrosselPatrocinador = function(pausar) {
-            sponsorPaused = pausar;
-            const badge = document.getElementById("sponsorTimerBadge");
-            if (badge) badge.textContent = pausar ? "PAUSADO" : "AUTO 5S";
+        window.pausarCarrosselPatrocinadores = function(pausar) {
+            sponsorPaused = Boolean(pausar);
         };
 
         window.mudarSlidePatrocinador = function(delta) {
             const total = state.patrocinadores.length;
             if (!total) return;
-            state.sponsorIndex = (state.sponsorIndex + delta + total) % total;
-            salvarEstado();
-            renderizarPatrocinadores();
+            sponsorIndex = (sponsorIndex + delta + total) % total;
+            renderizarCarrosselPatrocinadores(true);
         };
 
         window.irParaSlidePatrocinador = function(idx) {
-            if (!state.patrocinadores[idx]) return;
-            state.sponsorIndex = idx;
-            salvarEstado();
-            renderizarPatrocinadores();
+            const total = state.patrocinadores.length;
+            if (!total || idx < 0 || idx >= total) return;
+            sponsorIndex = idx;
+            renderizarCarrosselPatrocinadores(true);
         };
 
+        function renderizarCarrosselPatrocinadores(reiniciarTimer = true) {
+            const stage = document.getElementById("sponsorStage");
+            const dots = document.getElementById("sponsorDots");
+            const counter = document.getElementById("sponsorSlideCounter");
+            if (!stage || !dots || !counter) return;
+
+            const lista = state.patrocinadores || [];
+            if (!lista.length) {
+                sponsorIndex = 0;
+                counter.textContent = "0 / 0";
+                stage.innerHTML = `
+                    <div style="text-align:center; padding:16px; font-family:'JetBrains Mono',monospace;">
+                        <div style="font-size:12px; font-weight:800; color:var(--text-muted); margin-bottom:8px;">NENHUMA IMAGEM DE PATROCINADOR CADASTRADA</div>
+                        <button type="button" class="btn-acao-inline" style="border-color:var(--accent-gold); color:var(--accent-gold);" onclick="window.abrirModalPatrocinadores()">+ ADICIONAR IMAGEM</button>
+                    </div>
+                `;
+                dots.innerHTML = "";
+                if (sponsorTimer) { clearInterval(sponsorTimer); sponsorTimer = null; }
+                return;
+            }
+
+            if (sponsorIndex >= lista.length) sponsorIndex = 0;
+            const atual = lista[sponsorIndex];
+            counter.textContent = `${sponsorIndex + 1} / ${lista.length}`;
+
+            stage.innerHTML = `
+                <img src="${atual.imagem}" alt="${atual.titulo || "Patrocinador"}" class="sponsor-slide-img">
+                <div class="sponsor-slide-caption">
+                    <span>${atual.titulo || "Patrocinador"}</span>
+                    <span style="color:var(--accent-gold); font-size:10px;">ROTAÇÃO 5S</span>
+                </div>
+            `;
+
+            dots.innerHTML = lista.map((item, idx) => `
+                <button type="button"
+                    aria-label="Slide ${idx + 1}"
+                    class="sponsor-dot ${idx === sponsorIndex ? "active" : ""}"
+                    onclick="window.irParaSlidePatrocinador(${idx})"></button>
+            `).join("");
+
+            if (reiniciarTimer) iniciarTimerPatrocinadores();
+        }
+
         window.abrirModalPatrocinadores = function() {
+            uploadedSponsorDataUrl = "";
+            document.getElementById("patrocinadorNome").value = "";
+            document.getElementById("patrocinadorUrl").value = "";
+            document.getElementById("patrocinadorArquivo").value = "";
             renderizarListaPatrocinadoresModal();
             document.getElementById("modalPatrocinadores").classList.add("active");
         };
 
-        function readFileAsDataUrl(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
+        window.lerArquivoPatrocinador = function(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedSponsorDataUrl = e.target.result || "";
+            };
+            reader.readAsDataURL(file);
+        };
 
-        window.adicionarPatrocinador = async function(e) {
+        window.adicionarPatrocinador = function(e) {
             e.preventDefault();
-            const nome = (document.getElementById("patrocinadorNome").value || "").trim();
-            const sub = (document.getElementById("patrocinadorSub").value || "").trim();
-            const arquivoInput = document.getElementById("patrocinadorArquivo");
-            const urlInput = (document.getElementById("patrocinadorUrl").value || "").trim();
-
-            let imagem = urlInput;
-            if (arquivoInput.files && arquivoInput.files[0]) {
-                imagem = await readFileAsDataUrl(arquivoInput.files[0]);
-            }
-
-            if (!nome || !imagem) {
-                alert("Informe o nome do patrocinador e selecione uma imagem ou URL.");
-                return;
-            }
+            const nome = (document.getElementById("patrocinadorNome").value || "").trim() || "Patrocinador";
+            const url = (document.getElementById("patrocinadorUrl").value || "").trim();
+            const imagem = uploadedSponsorDataUrl || url;
+            if (!imagem) return;
 
             state.patrocinadores.push({
-                id: "sp-" + Date.now(),
-                nome,
-                sub: sub || "Patrocinador Oficial",
+                id: `pat-${Date.now()}`,
+                titulo: nome,
                 imagem
             });
-            state.sponsorIndex = state.patrocinadores.length - 1;
-            document.getElementById("formNovoPatrocinador").reset();
+            sponsorIndex = state.patrocinadores.length - 1;
             salvarEstado();
-            renderizarPatrocinadores();
+            renderizarCarrosselPatrocinadores(true);
             renderizarListaPatrocinadoresModal();
+
+            uploadedSponsorDataUrl = "";
+            document.getElementById("patrocinadorNome").value = "";
+            document.getElementById("patrocinadorUrl").value = "";
+            document.getElementById("patrocinadorArquivo").value = "";
         };
 
-        window.excluirPatrocinadorPorId = function(id) {
-            state.patrocinadores = state.patrocinadores.filter(p => p.id !== id);
-            if (state.sponsorIndex >= state.patrocinadores.length) {
-                state.sponsorIndex = Math.max(0, state.patrocinadores.length - 1);
-            }
+        window.excluirPatrocinador = function(id) {
+            state.patrocinadores = (state.patrocinadores || []).filter(p => p.id !== id);
+            if (sponsorIndex >= state.patrocinadores.length) sponsorIndex = 0;
             salvarEstado();
-            renderizarPatrocinadores();
+            renderizarCarrosselPatrocinadores(true);
             renderizarListaPatrocinadoresModal();
-        };
-
-        window.excluirPatrocinadorAtual = function() {
-            const atual = state.patrocinadores[state.sponsorIndex];
-            if (!atual) return;
-            window.excluirPatrocinadorPorId(atual.id);
         };
 
         function renderizarListaPatrocinadoresModal() {
-            const box = document.getElementById("listaPatrocinadoresGerenciar");
+            const box = document.getElementById("listaPatrocinadoresModal");
             if (!box) return;
-            if (!state.patrocinadores.length) {
-                box.innerHTML = `<div style="font-size:11px;color:var(--text-muted);">Nenhuma imagem cadastrada.</div>`;
+            const lista = state.patrocinadores || [];
+            if (!lista.length) {
+                box.innerHTML = `<div style="font-size:11px; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">Nenhum patrocinador cadastrado.</div>`;
                 return;
             }
-            box.innerHTML = state.patrocinadores.map(p => `
+            box.innerHTML = lista.map(p => `
                 <div class="sponsor-manage-item">
-                    <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-                        <img src="${p.imagem}" alt="${p.nome}" class="sponsor-manage-thumb">
-                        <div style="min-width:0;">
-                            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.nome}</div>
-                            <div style="font-size:10px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.sub || ""}</div>
-                        </div>
+                    <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                        <img src="${p.imagem}" alt="${p.titulo}" class="sponsor-thumb">
+                        <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:700;">${p.titulo}</span>
                     </div>
-                    <button type="button" class="btn-sponsor-mini danger" onclick="window.excluirPatrocinadorPorId('${p.id}')">EXCLUIR</button>
+                    <button type="button" class="btn-acao-inline danger" onclick="window.excluirPatrocinador('${p.id}')">EXCLUIR</button>
                 </div>
             `).join("");
         }
 
-        function renderizarPatrocinadores() {
-            const stage = document.getElementById("sponsorStage");
-            const dots = document.getElementById("sponsorDots");
-            const counter = document.getElementById("sponsorSlideCounter");
-            const total = state.patrocinadores.length;
-
-            if (!total) {
-                stage.innerHTML = `
-                    <div class="sponsor-empty">
-                        Nenhum patrocinador cadastrado. Clique em <b>+ EDITAR / IMAGENS</b> para adicionar.
-                    </div>
-                `;
-                dots.innerHTML = "";
-                counter.textContent = "0 / 0";
-                return;
-            }
-
-            if (state.sponsorIndex >= total) state.sponsorIndex = 0;
-            counter.textContent = `${state.sponsorIndex + 1} / ${total}`;
-
-            stage.innerHTML = state.patrocinadores.map((p, idx) => `
-                <div class="sponsor-slide ${idx === state.sponsorIndex ? "active" : ""}">
-                    <img src="${p.imagem}" alt="${p.nome}">
-                    <div class="sponsor-slide-overlay"></div>
-                    <div class="sponsor-slide-info">
-                        <span class="sponsor-badge-tag">PATROCINADOR</span>
-                        <h3 class="sponsor-name">${p.nome}</h3>
-                        ${p.sub ? `<p class="sponsor-caption">${p.sub}</p>` : ""}
-                    </div>
-                </div>
-            `).join("");
-
-            dots.innerHTML = state.patrocinadores.map((_, idx) => `
-                <button type="button" class="sponsor-dot ${idx === state.sponsorIndex ? "active" : ""}"
-                    onclick="window.irParaSlidePatrocinador(${idx})" aria-label="Slide ${idx + 1}"></button>
-            `).join("");
-        }
-
+        // AUTENTICAÇÃO E CONTROLES DO PAINEL
         window.executarLogin = function() {
             document.getElementById("telaLogin").style.display = "none";
             document.getElementById("painelPrincipal").style.display = "block";
             renderizarTudo();
-            iniciarCarrosselPatrocinadores();
         };
 
         window.executarLogout = function() {
@@ -1529,6 +1444,7 @@
                 status: document.getElementById("laudoStatus").value,
                 visc: parseFloat(document.getElementById("laudoVisc").value) || 0,
                 iso: document.getElementById("laudoIso").value || "--",
+                liberacao: document.getElementById("laudoLiberacao").value.trim() || "Registro técnico",
                 resumo: document.getElementById("laudoResumo").value.trim(),
                 acao: document.getElementById("laudoAcao").value.trim() || "Acompanhamento de rotina."
             });
@@ -1581,6 +1497,9 @@
             if (!state.ativos.some(a => a.id === tag)) {
                 state.ativos.push({ id: tag, modelo, frota: "Operacional" });
             }
+            if (!state.laudos[tag]) {
+                state.laudos[tag] = { hidraulico: [], motor: [], transmissao: [] };
+            }
             state.ativoId = tag;
             document.getElementById("formNovoAtivo").reset();
             window.fecharModais();
@@ -1588,7 +1507,7 @@
             renderizarTudo();
         };
 
-        window.abrirModalCompartilhamento = function() {
+        window.abrirModalCompartilhamentoFluido = function() {
             const ativo = state.ativos.find(a => a.id === state.ativoId) || { id: state.ativoId, modelo: "" };
             const ultimo = getUltimoLaudo(state.ativoId, state.sistema);
             document.getElementById("textoCompartilhamento").value =
@@ -1665,6 +1584,7 @@
                         <button type="button" class="btn-acao-inline" onclick="window.excluirLaudo(${item.id})">EXCLUIR</button>
                     </div>
                     <div class="lab-text-body">${item.resumo}</div>
+                    ${item.liberacao ? `<div class="box-liberacao-tecnica"><div class="box-liberacao-header">Liberação Técnica</div><div>${item.liberacao}</div></div>` : ""}
                     <div class="lab-action-text">Ação: ${item.acao}</div>
                     <div class="lab-footer-dates">
                         <span>Data: ${item.data}</span>
@@ -1732,7 +1652,7 @@
         }
 
         function renderizarTudo() {
-            renderizarPatrocinadores();
+            renderizarCarrosselPatrocinadores(true);
             renderizarPanorama();
             renderizarAtivoELaudos();
             renderizarGraficos();
